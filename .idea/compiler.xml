@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="2023-2_9329-midteam2" />
         <module name="LeonardoDiCafe" />
       </profile>
     </annotationProcessing>

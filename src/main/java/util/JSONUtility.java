@@ -3,11 +3,10 @@ package util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import shared.Beverage;
 import shared.Food;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,4 +42,44 @@ public class JSONUtility {
             e.printStackTrace();
         }
     }
+
+    public static Object loadBeverageMenu(File filePath) {
+
+        Object beverageMenu;
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+            StringBuilder builder = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null){
+                builder.append(line);
+            }
+
+            Gson gson = new GsonBuilder().serializeNulls().create();
+
+            String json = builder.toString();
+            Type beverageMenuType = new TypeToken<HashMap<String, Beverage>>(){}.getType();
+            HashMap<String, Beverage>beveragemenuList = gson.fromJson(json, beverageMenuType);
+
+            beverageMenu = beveragemenuList;
+
+            return beverageMenu;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    } // end of loadBeverageMenu
+
+    public static void saveBeverageMenu(HashMap<String, Beverage> beverageMenu, File filepath) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(filepath)) {
+            gson.toJson(beverageMenu, writer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Beverage menu saved successfully!");
+    }// end of saveBeverageMenu
 }
