@@ -1,0 +1,16 @@
+{
+  "Chocolate Charm": {
+    "quantity": 19,
+    "price": 16.5,
+    "name": "Chocolate Charm",
+    "type": "f",
+    "review": 4.5,
+    "reviewCount": 19,
+    "image": [
+      "Chocolate Charm.png",
+      null
+    ],
+    "description": "Irresistible chocolate cake that charms the taste buds with every bite.",
+    "amountSold": 190
+  }
+}

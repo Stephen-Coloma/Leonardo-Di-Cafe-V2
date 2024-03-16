@@ -56,8 +56,10 @@ public class Server extends Application implements ClientObserver {
 
     private void startServer() {
         new Thread(() -> {
-            try (ServerSocket server = new ServerSocket(PORT);
-                 ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)) {
+            ServerSocket server = null;
+            ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+            try {
+                server = new ServerSocket(PORT);
                 System.out.println("Server listening on port " + PORT);
 
                 ServerController controller;
@@ -71,9 +73,18 @@ public class Server extends Application implements ClientObserver {
                 }
             } catch (IOException e) {
                 System.err.println("Error during server launch: " + e.getMessage());
+            } finally {
+                if (server != null) {
+                    try {
+                        server.close();
+                    } catch (IOException e) {
+                        System.err.println("Error closing server socket: " + e.getMessage());
+                    }
+                }
             }
         }).start();
     } // end of startServer
+
 
     /**
      * Starts broadcasting the server's presence to all machines connected in the local network.

@@ -5,12 +5,14 @@ module LeonardoDiCafe {
     requires org.kordamp.bootstrapfx.core;
     requires java.logging;
     requires java.xml;
+    requires com.google.gson;
 
     opens client to javafx.fxml;
     opens server to javafx.fxml;
     opens client.controller to javafx.fxml;
     opens server.view to javafx.fxml;
     opens client.view to javafx.fxml;
+    opens shared to com.google.gson;
 
     exports client;
     exports server;
