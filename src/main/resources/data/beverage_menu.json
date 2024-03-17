@@ -15,6 +15,7 @@
     "review": 4.5,
     "reviewCount": 23,
     "image": [
+      "Black Iced Coffee.png",
       null
     ],
     "description": "A refreshing blend of rich coffee with a hint of chocolate, perfect for any time of the day.",
@@ -36,7 +37,8 @@
     "review": 4.4,
     "reviewCount": 12,
     "image": [
-      "Black Iced Coffee.png"
+      "Black Iced Coffee.png",
+      null
     ],
     "description": "A refreshing combination of matcha and frosted milk, served over ice for a delightful treat.",
     "amountSold": 0
@@ -57,7 +59,8 @@
     "review": 4.9,
     "reviewCount": 24,
     "image": [
-      "Mocha Frappe.png"
+      "Mocha Frappe.png",
+      null
     ],
     "description": "Experience the ultimate mocha indulgence with this rich and creamy frappe.",
     "amountSold": 0
@@ -78,7 +81,8 @@
     "review": 4.2,
     "reviewCount": 32,
     "image": [
-      "Okinawa Milktea.png"
+      "Okinawa Milktea.png",
+      null
     ],
     "description": "Transport yourself to Okinawa with this delightful milk tea, boasting rich and aromatic flavors.",
     "amountSold": 0

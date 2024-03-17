@@ -74,7 +74,9 @@ public class JSONUtility {
     } // end of loadBeverageMenu
 
     public static void saveBeverageMenu(HashMap<String, Beverage> beverageMenu, File filepath) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        for (String beverage: beverageMenu.keySet()) {
+            beverageMenu.get(beverage).setImage(new Object[]{beverageMenu.get(beverage).getImageName(), null});
+        }
         try (FileWriter writer = new FileWriter(filepath)) {
             gson.toJson(beverageMenu, writer);
         } catch (IOException e) {
