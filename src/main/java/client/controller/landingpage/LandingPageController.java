@@ -1,5 +1,7 @@
 package client.controller.landingpage;
 
+import client.Client;
+import client.controller.ClientController;
 import client.controller.login.LoginPageController;
 import client.controller.signup.SignUpPageController;
 import client.model.fxmlmodel.LoginPageModel;
@@ -13,15 +15,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.PrimitiveIterator;
 
 public class LandingPageController {
     private FXMLLoader loader;
     private Parent root;
     private LoginPageController loginPageController;
     private SignUpPageController signUpPageController;
+    private Registry registry;
 
     /**Constructor*/
     public LandingPageController(LandingPageView view){
+        try {
+            registry = LocateRegistry.getRegistry(Client.PORT);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         //setting up action for login button. this action loads up the login view
         view.setActionLoginButton((ActionEvent event)->{
@@ -30,7 +41,7 @@ public class LandingPageController {
                 loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
                 root = loader.load();
 
-                loginPageController = new LoginPageController(loader.getController(), new LoginPageModel());
+                loginPageController = new LoginPageController(loader.getController(), new LoginPageModel(registry));
 
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
@@ -48,7 +59,7 @@ public class LandingPageController {
                 loader = new FXMLLoader(getClass().getResource("/fxml/client/signup_page.fxml"));
                 root = loader.load();
 
-                signUpPageController = new SignUpPageController(loader.getController(), new SignUpPageModel());
+                signUpPageController = new SignUpPageController(loader.getController(), new SignUpPageModel(registry));
 
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);

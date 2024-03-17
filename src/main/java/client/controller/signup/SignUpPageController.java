@@ -12,17 +12,21 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import util.exception.AccountExistsException;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 
 public class SignUpPageController {
     private final SignUpPageView signUpView;
+    private final SignUpPageModel signUpModel;
     private FXMLLoader loader;
     private Parent root;
-    private Object[] serverResponse;
+    private boolean serverResponse;
 
     public SignUpPageController(SignUpPageView signUpView, SignUpPageModel signUpModel){
         this.signUpView = signUpView;
+        this.signUpModel = signUpModel;
 
         //setting up action for login button
         this.signUpView.setActionSignUpButton((ActionEvent event)->{
@@ -45,12 +49,19 @@ public class SignUpPageController {
                     serverResponse = signUpModel.getServerResponse();
 
                     //parse the server response
-                    parseServerResponse(serverResponse, event);
+                    loadLoginMenu(serverResponse, event);
 
                 } catch (IOException e) { //load a new popup when failed to connect to server
                     ServerDownView.showServerErrorUI();
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                } catch (AccountExistsException e) {
+                    this.signUpView.getNoticeLabel().setText("account exists");
+                    this.signUpView.getNoticeLabel().setVisible(true);
+                    this.signUpView.getUserNameTextField().clear();
+                    this.signUpView.getUserNameTextField().setPromptText("try another one");
                 }
             }
         });
@@ -75,27 +86,37 @@ public class SignUpPageController {
     }
 
     /**This method parses the response from the server. If Login in successful, load the main menu client page*/
-    private void parseServerResponse(Object[] serverResponse, ActionEvent event) {
-        //load login UI if successful
-        try {
-            if (serverResponse[1].equals("SIGN_UP_SUCCESSFUL")){
-                loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
-                root = loader.load();
+    private void loadLoginMenu(boolean isSuccessful, ActionEvent event) throws IOException {
+        loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
+        root = loader.load();
 
-                new LoginPageController(loader.getController(), new LoginPageModel());
+        new LoginPageController(loader.getController(), new LoginPageModel(signUpModel.getRegistry()));
 
-                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } else {
-                this.signUpView.getNoticeLabel().setText("account exists");
-                this.signUpView.getNoticeLabel().setVisible(true);
-                this.signUpView.getUserNameTextField().clear();
-                this.signUpView.getUserNameTextField().setPromptText("try another one");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+//        //load login UI if successful
+//        try {
+//            if (serverResponse[1].equals("SIGN_UP_SUCCESSFUL")){
+//                loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
+//                root = loader.load();
+//
+//                new LoginPageController(loader.getController(), new LoginPageModel());
+//
+//                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//                Scene scene = new Scene(root);
+//                stage.setScene(scene);
+//                stage.show();
+//            } else {
+//                this.signUpView.getNoticeLabel().setText("account exists");
+//                this.signUpView.getNoticeLabel().setVisible(true);
+//                this.signUpView.getUserNameTextField().clear();
+//                this.signUpView.getUserNameTextField().setPromptText("try another one");
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 } // end of SignUpPageController class

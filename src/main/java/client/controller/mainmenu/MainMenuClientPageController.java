@@ -41,6 +41,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.rmi.registry.Registry;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -63,10 +64,12 @@ public class MainMenuClientPageController {
     private double cartTotalPrice = 0; //for cart purposes
     private static final long DEBOUNCE_DELAY = 500;
     private Timer debounceTimer;
+    private Registry registry;
 
-    public MainMenuClientPageController(MainMenuClientPageModel mainMenuModel, MainMenuClientPageView mainMenuView) {
+    public MainMenuClientPageController(MainMenuClientPageModel mainMenuModel, MainMenuClientPageView mainMenuView, Registry registry) {
         this.mainMenuView = mainMenuView;
         this.mainMenuModel = mainMenuModel;
+        this.registry = registry;
 
         // setting up the time and date labels
         setupClock();
@@ -158,33 +161,33 @@ public class MainMenuClientPageController {
         return new ArrayList<>(uniqueProducts);
     }
 
-    public void run() {
-        try {
-            primaryStage.setOnCloseRequest(event -> {
-                String clientID = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getUsername().hashCode());
-                sendData(clientID, "LOGOUT", null);
-                closeResources();
-                System.exit(0);
-            });
+//    public void run() {
+//        try {
+//            primaryStage.setOnCloseRequest(event -> {
+//                String clientID = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getUsername().hashCode());
+//                sendData(clientID, "LOGOUT", null);
+//                closeResources();
+//                System.exit(0);
+//            });
+//
+//            listenToHost();
+//        } catch (IOException | ClassNotFoundException ioException) {
+//            ioException.printStackTrace();
+//        }
+//    } // end of run
 
-            listenToHost();
-        } catch (IOException | ClassNotFoundException ioException) {
-            ioException.printStackTrace();
-        }
-    } // end of run
-
-    private void listenToHost() throws IOException, ClassNotFoundException {
-        try {
-            while (true) {
-                Object[] data = (Object[]) in.readObject();
-                if (data != null) {
-                    handleIncomingData(data);
-                }
-            }
-        } catch (SocketException e) {
-            System.out.println("Socket closed by the server.");
-        }
-    } // end of listenToHost
+//    private void listenToHost() throws IOException, ClassNotFoundException {
+//        try {
+//            while (true) {
+//                Object[] data = (Object[]) in.readObject();
+//                if (data != null) {
+//                    handleIncomingData(data);
+//                }
+//            }
+//        } catch (SocketException e) {
+//            System.out.println("Socket closed by the server.");
+//        }
+//    } // end of listenToHost
 
     private void handleIncomingData(Object[] data) {
         String dataCode = (String) data[1];
@@ -813,7 +816,7 @@ public class MainMenuClientPageController {
             loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
             root = loader.load(); //load
 
-            loginPageController = new LoginPageController(loader.getController(), new LoginPageModel()); //get controller
+            loginPageController = new LoginPageController(loader.getController(), new LoginPageModel(registry)); //get controller
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

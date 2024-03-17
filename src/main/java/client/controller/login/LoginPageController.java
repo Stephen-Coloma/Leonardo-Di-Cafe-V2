@@ -12,8 +12,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import util.exception.AccountAlreadyLoggedIn;
+import util.exception.InvalidCredentialsException;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.registry.Registry;
 
 public class LoginPageController {
     private final LoginPageView loginView;
@@ -42,12 +46,24 @@ public class LoginPageController {
                     serverResponse = loginModel.getServerResponse();
 
                     //parse the server response
-                    parseServerResponse(serverResponse, event);
+                    loadMainMenu(serverResponse, event);
 
                 } catch (IOException e) { //load a new popup when failed to connect to server
                     ServerDownView.showServerErrorUI();
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
+                } catch (InvalidCredentialsException e) {
+                    this.loginView.getNoticeLabel().setText("wrong credentials");
+                    this.loginView.getNoticeLabel().setVisible(true);
+                    this.loginView.getUsernameTextField().clear();
+                    this.loginView.getPasswordField().clear();
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                } catch (AccountAlreadyLoggedIn e) {
+                    this.loginView.getNoticeLabel().setText("account already logged in");
+                    this.loginView.getNoticeLabel().setVisible(true);
+                    this.loginView.getUsernameTextField().clear();
+                    this.loginView.getPasswordField().clear();
                 }
             }
         });
@@ -72,43 +88,60 @@ public class LoginPageController {
     }
 
     /**This method parses the response from the server. If Login in successful, load the main menu client page*/
-    private void parseServerResponse(Object[] serverResponse, ActionEvent event) {
-        //server response Guide Object[]{clientID, message, Object[] clientModelData}
-        //load login UI if successful
-        try {
-            if (serverResponse[1].equals("LOGIN_SUCCESSFUL")){
-                loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
-                root = loader.load();
+    private void loadMainMenu(Object[] serverResponse, ActionEvent event) throws IOException {
 
-                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
+        loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
+        root = loader.load();
 
-                //when loading the main menu, pass the clientModel received from the server
-                mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel((Object[]) serverResponse[2]), loader.getController());
-                mainMenu.setSocket(this.loginModel.getSocket());
-                mainMenu.setIn(this.loginModel.getIn());
-                mainMenu.setOut(this.loginModel.getOut());
-                mainMenu.setPrimaryStage(stage);
-                Thread thread = new Thread(() -> mainMenu.run());
-                thread.setDaemon(true);
-                thread.start();
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
 
-                stage.setScene(scene);
-                stage.show();
+        //when loading the main menu, pass the clientModel received from the server
+        mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel(serverResponse), loader.getController(), loginModel.getRegistry());
+        mainMenu.setPrimaryStage(stage);
+//        Thread thread = new Thread(() -> mainMenu.run());
+//        thread.setDaemon(true);
+//        thread.start();
 
-            } else if (serverResponse[1].equals("ALREADY_LOGGED_IN")){
-                this.loginView.getNoticeLabel().setText("account already logged in");
-                this.loginView.getNoticeLabel().setVisible(true);
-                this.loginView.getUsernameTextField().clear();
-                this.loginView.getPasswordField().clear();
-            } else {
-                this.loginView.getNoticeLabel().setText("wrong credentials");
-                this.loginView.getNoticeLabel().setVisible(true);
-                this.loginView.getUsernameTextField().clear();
-                this.loginView.getPasswordField().clear();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        stage.setScene(scene);
+        stage.show();
+
+//        //server response Guide Object[]{clientID, message, Object[] clientModelData}
+//        //load login UI if successful
+//        try {
+//            if (serverResponse[1].equals("LOGIN_SUCCESSFUL")){
+//                loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
+//                root = loader.load();
+//
+//                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//                Scene scene = new Scene(root);
+//
+//                //when loading the main menu, pass the clientModel received from the server
+//                mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel((Object[]) serverResponse[2]), loader.getController());
+////                mainMenu.setSocket(this.loginModel.getSocket());
+////                mainMenu.setIn(this.loginModel.getIn());
+////                mainMenu.setOut(this.loginModel.getOut());
+//                mainMenu.setPrimaryStage(stage);
+//                Thread thread = new Thread(() -> mainMenu.run());
+//                thread.setDaemon(true);
+//                thread.start();
+//
+//                stage.setScene(scene);
+//                stage.show();
+//
+//            } else if (serverResponse[1].equals("ALREADY_LOGGED_IN")){
+//                this.loginView.getNoticeLabel().setText("account already logged in");
+//                this.loginView.getNoticeLabel().setVisible(true);
+//                this.loginView.getUsernameTextField().clear();
+//                this.loginView.getPasswordField().clear();
+//            } else {
+//                this.loginView.getNoticeLabel().setText("wrong credentials");
+//                this.loginView.getNoticeLabel().setVisible(true);
+//                this.loginView.getUsernameTextField().clear();
+//                this.loginView.getPasswordField().clear();
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 } // end of LoginPageController class
