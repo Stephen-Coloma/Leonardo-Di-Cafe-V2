@@ -5,6 +5,7 @@ module LeonardoDiCafe {
     requires org.kordamp.bootstrapfx.core;
     requires java.logging;
     requires java.xml;
+    requires java.rmi;
 
     opens client to javafx.fxml;
     opens server to javafx.fxml;

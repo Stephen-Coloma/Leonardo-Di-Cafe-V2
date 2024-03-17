@@ -151,64 +151,64 @@ public class ServerModel {
         return true;
     }
 
-    /**This method handles all the signup processes from the client.
-     * @param customerSignup new account that tries to create an account.
-     *
-     * Algorithm:
-     * 1. Check the list of customers if the customer that that tries to sign up already exists.
-     * 2. If exists, throws an exception  "Account exists"
-     * 3. If not, create a new Customer out of a customer and add it to the list*/
-    public synchronized boolean processSignUp(Customer customerSignup) throws Exception{
-        String signUpUsername = customerSignup.getUsername();
+//    /**This method handles all the signup processes from the client.
+//     * @param customerSignup new account that tries to create an account.
+//     *
+//     * Algorithm:
+//     * 1. Check the list of customers if the customer that that tries to sign up already exists.
+//     * 2. If exists, throws an exception  "Account exists"
+//     * 3. If not, create a new Customer out of a customer and add it to the list*/
+//    public synchronized boolean processSignUp(Customer customerSignup) throws Exception{
+//        String signUpUsername = customerSignup.getUsername();
+//
+//        for (Customer customerAccount: customerAccountList) {
+//            if (customerAccount.getUsername().equals(signUpUsername)){
+//                throw new AccountExistsException("Account exists");
+//            }
+//        }
+//
+//        Customer customer =  new Customer(customerSignup); //this creates a customer that has orderHistory in it
+//        customerAccountList.add(customer);
+//        return true;
+//    }
 
-        for (Customer customerAccount: customerAccountList) {
-            if (customerAccount.getUsername().equals(signUpUsername)){
-                throw new AccountExistsException("Account exists");
-            }
-        }
+//    /**This method handles all the login processes from the client.
+//     * @param username username
+//     * @param password password
+//     * @return the objects to be loaded in client side
+//     * @throws Exception when login credentials is invalid
+//     *
+//     * Algorithm:
+//     * 1. Check all customer in customerAccountList and see if it matches username and password.
+//     * 2. If not, thrown an exception called "invalid credentials"
+//     * 3. if account exist, get the accounts from the account list, get the foodMenu and beverageMenu
+//     * return foodMenu, beverageMenu and customer
+//     */
+//    public Object[] processLogin(String username, String password) throws Exception{
+//        for (Customer customerAccount: customerAccountList) {
+//            //account
+//            if (customerAccount.getUsername().equals(username) && customerAccount.getPassword().equals(password)){
+//                if (!userLoggedIn.contains(String.valueOf(username.hashCode()))){
+//                    //adds the value to the user logged in
+//                    userLoggedIn.add(String.valueOf(username.hashCode()));
+//
+//                    HashMap<String, Food> clientFoodMenuToLoad = new HashMap<>(foodMenu);
+//                    HashMap<String, Beverage> clientBeverageMenuToLoad = new HashMap<>(beverageMenu);
+//
+//                    //return to controller
+//                    return new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
+//                }else {
+//                    throw new AccountAlreadyLoggedIn("Account already logged in");
+//                }
+//            }
+//        }
+//        throw new InvalidCredentialsException("Invalid credentials");
+//    }
 
-        Customer customer =  new Customer(customerSignup); //this creates a customer that has orderHistory in it
-        customerAccountList.add(customer);
-        return true;
-    }
-
-    /**This method handles all the login processes from the client.
-     * @param username username
-     * @param password password
-     * @return the objects to be loaded in client side
-     * @throws Exception when login credentials is invalid
-     *
-     * Algorithm:
-     * 1. Check all customer in customerAccountList and see if it matches username and password.
-     * 2. If not, thrown an exception called "invalid credentials"
-     * 3. if account exist, get the accounts from the account list, get the foodMenu and beverageMenu
-     * return foodMenu, beverageMenu and customer
-     */
-    public Object[] processLogin(String username, String password) throws Exception{
-        for (Customer customerAccount: customerAccountList) {
-            //account
-            if (customerAccount.getUsername().equals(username) && customerAccount.getPassword().equals(password)){
-                if (!userLoggedIn.contains(String.valueOf(username.hashCode()))){
-                    //adds the value to the user logged in
-                    userLoggedIn.add(String.valueOf(username.hashCode()));
-
-                    HashMap<String, Food> clientFoodMenuToLoad = new HashMap<>(foodMenu);
-                    HashMap<String, Beverage> clientBeverageMenuToLoad = new HashMap<>(beverageMenu);
-
-                    //return to controller
-                    return new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
-                }else {
-                    throw new AccountAlreadyLoggedIn("Account already logged in");
-                }
-            }
-        }
-        throw new InvalidCredentialsException("Invalid credentials");
-    }
-
-    /**This removes the client from the server if the client logged out already*/
-    public void processLogout(String clientID){
-        this.userLoggedIn.remove(clientID);
-    }
+//    /**This removes the client from the server if the client logged out already*/
+//    public void processLogout(String clientID){
+//        this.userLoggedIn.remove(clientID);
+//    }
 
     /**This method updates the reviews for the products*/
     public void processReview(List<Product> ratedProducts){
@@ -249,5 +249,17 @@ public class ServerModel {
 
     public List<Order> getOrderList() {
         return orderList;
+    }
+
+    public List<ServerController> getServerControllers() {
+        return serverControllers;
+    }
+
+    public List<ClientObserver> getObservers() {
+        return observers;
+    }
+
+    public List<String> getUserLoggedIn() {
+        return userLoggedIn;
     }
 }
