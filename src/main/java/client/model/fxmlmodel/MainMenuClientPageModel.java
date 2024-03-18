@@ -1,23 +1,29 @@
 package client.model.fxmlmodel;
 
 import client.model.ClientModel;
-import shared.Beverage;
-import shared.Customer;
-import shared.Food;
+import shared.*;
+import shared.rmiinterfaces.OrderManagement;
+import util.exception.OutOfStockException;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainMenuClientPageModel {
     //data to be accessed after login by the user
     private final ClientModel clientModel;
-    private Socket socket;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
+    private Registry registry;
+    private OrderManagement orderManagement;
+//    private Socket socket;
+//    private ObjectOutputStream out;
+//    private ObjectInputStream in;
 
-    public MainMenuClientPageModel(Object[] clientModelData) {
+    public MainMenuClientPageModel(Object[] clientModelData, Registry registry) throws NotBoundException, RemoteException {
         //the serverResponse[2] responds Object[] {customer, foodMenu, beverageMenu}
 
         Customer customer = ((Customer) clientModelData[0]);
@@ -25,30 +31,52 @@ public class MainMenuClientPageModel {
         HashMap<String, Beverage> beverageMenu = ((HashMap<String, Beverage>) clientModelData[2]);
 
         clientModel = new ClientModel(customer, foodMenu, beverageMenu);
+
+        this.registry = registry;
+        this.orderManagement = (OrderManagement) registry.lookup("order management");
     }
 
+    public Order processCheckout(String clientId, Order order) throws OutOfStockException, RemoteException {
+        Order successfulOrder = orderManagement.checkout(order);
+        return successfulOrder;
+    }
+
+    public void processReview(String clientId, List<Product> ratedProducts) throws RemoteException {
+        orderManagement.review(ratedProducts);
+    }
+
+    public void processLogout(String clientId) throws RemoteException {
+        orderManagement.logout(clientId);
+    }
 
     public ClientModel getClientModel() {
         return clientModel;
     }
 
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
 
-    public ObjectOutputStream getOut() {
-        return out;
-    }
 
-    public void setOut(ObjectOutputStream out) {
-        this.out = out;
-    }
+//    public void setSocket(Socket socket) {
+//        this.socket = socket;
+//    }
+//
+//    public ObjectOutputStream getOut() {
+//        return out;
+//    }
+//
+//    public void setOut(ObjectOutputStream out) {
+//        this.out = out;
+//    }
+//
+//    public ObjectInputStream getIn() {
+//        return in;
+//    }
+//
+//    public void setIn(ObjectInputStream in) {
+//        this.in = in;
+//    }
 
-    public ObjectInputStream getIn() {
-        return in;
-    }
 
-    public void setIn(ObjectInputStream in) {
-        this.in = in;
+    public Registry getRegistry() {
+        return registry;
     }
 }

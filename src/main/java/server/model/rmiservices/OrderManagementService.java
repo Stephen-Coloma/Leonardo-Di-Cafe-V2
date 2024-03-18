@@ -3,6 +3,7 @@ package server.model.rmiservices;
 import server.model.ServerModel;
 import shared.*;
 import shared.rmiinterfaces.OrderManagement;
+import util.exception.OutOfStockException;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -16,7 +17,7 @@ public class OrderManagementService extends UnicastRemoteObject implements Order
     }
 
     @Override
-    public Order checkout(Order order) throws RemoteException, Exception {
+    public Order checkout(Order order) throws RemoteException, OutOfStockException {
         if (!checkAvailability(order)) { //order that is not successful
             return null;
         };
@@ -74,7 +75,7 @@ public class OrderManagementService extends UnicastRemoteObject implements Order
 
     /**This method update the product in the menu there are available products. Synchronization is handled here already.
      * @throws Exception if the product in the menu is out of stock */
-    private void updateMenu(Order order) throws Exception {
+    private void updateMenu(Order order) throws OutOfStockException {
         for (Product product: order.getOrders()) {
             if (product instanceof Food food){
                 //cast it
@@ -111,5 +112,10 @@ public class OrderManagementService extends UnicastRemoteObject implements Order
                 serverModel.getBeverageMenu().get(productName).updateReview(review);
             }
         }
+    }
+
+    /**This removes the client from the server if the client logged out already*/
+    public void logout(String clientID){
+        this.serverModel.getUserLoggedIn().remove(clientID);
     }
 }

@@ -35,12 +35,15 @@ import shared.Product;
 import util.ImageUtility;
 import util.LoadingScreenUtility;
 import util.PushNotification;
+import util.exception.OutOfStockException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -64,12 +67,10 @@ public class MainMenuClientPageController {
     private double cartTotalPrice = 0; //for cart purposes
     private static final long DEBOUNCE_DELAY = 500;
     private Timer debounceTimer;
-    private Registry registry;
 
-    public MainMenuClientPageController(MainMenuClientPageModel mainMenuModel, MainMenuClientPageView mainMenuView, Registry registry) {
+    public MainMenuClientPageController(MainMenuClientPageModel mainMenuModel, MainMenuClientPageView mainMenuView) {
         this.mainMenuView = mainMenuView;
         this.mainMenuModel = mainMenuModel;
-        this.registry = registry;
 
         // setting up the time and date labels
         setupClock();
@@ -136,7 +137,12 @@ public class MainMenuClientPageController {
                         orderHistoryPageController.getView().closeCheckoutView();
                         if (!ratedProducts.isEmpty()){
                             String clientId = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getName().hashCode());
-                            sendData(clientId, "PROCESS_REVIEW", ratedProducts);
+
+                            try {
+                                mainMenuModel.processReview(clientId, ratedProducts);
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
                             PushNotification.toastSuccess("Review Sent", "Thank You for your reviews!");
                         }
                     });
@@ -189,46 +195,46 @@ public class MainMenuClientPageController {
 //        }
 //    } // end of listenToHost
 
-    private void handleIncomingData(Object[] data) {
-        String dataCode = (String) data[1];
-        System.out.println("received data from server");
-        System.out.println(data[0]);
-        System.out.println(data[1]);
-        System.out.println(data[2]);
-        switch (dataCode) {
-            case "PRODUCT_CHANGES" -> {
-            }
-            case "PROCESS_ORDER_SUCCESSFUL" -> {
-                mainMenuModel.getClientModel().orderProcessSuccessful((Order) data[2]);
-                PushNotification.toastSuccess("Checkout Status", "Your order has been placed");
-                Platform.runLater(() -> clearCart(false));
-            }
-            case "PROCESS_ORDER_FAILED" -> {
-                clearCart(false);
-                PushNotification.toastError("Checkout Status", "Order unsuccessful due to stock shortage");
-            }
-            case "DATA_UPDATE" -> {
-                System.out.println("Obtained Updated Products");
-                Object[] bundledData = (Object[]) data[2];
-                System.out.println(bundledData[0]);
-                System.out.println(bundledData[1]);
-                mainMenuModel.getClientModel().setFoodMenu((HashMap<String, Food>) bundledData[0]);
-                mainMenuModel.getClientModel().setBeverageMenu((HashMap<String, Beverage>) bundledData[1]);
-            }
-        }
-    } // end of handleIncomingData
-
-    private void sendData(String clientID, String code, Object data) {
-        Object[] response = {clientID, code, data};
-        try {
-            out.writeObject(response);
-            out.flush();
-            out.reset();
-        } catch (IOException e) {
-            showServerErrorUI();
-            throw new RuntimeException(e);
-        }
-    } // end of sendData
+//    private void handleIncomingData(Object[] data) {
+//        String dataCode = (String) data[1];
+//        System.out.println("received data from server");
+//        System.out.println(data[0]);
+//        System.out.println(data[1]);
+//        System.out.println(data[2]);
+//        switch (dataCode) {
+//            case "PRODUCT_CHANGES" -> {
+//            }
+//            case "PROCESS_ORDER_SUCCESSFUL" -> {
+//                mainMenuModel.getClientModel().orderProcessSuccessful((Order) data[2]);
+//                PushNotification.toastSuccess("Checkout Status", "Your order has been placed");
+//                Platform.runLater(() -> clearCart(false));
+//            }
+//            case "PROCESS_ORDER_FAILED" -> {
+//                clearCart(false);
+//                PushNotification.toastError("Checkout Status", "Order unsuccessful due to stock shortage");
+//            }
+//            case "DATA_UPDATE" -> {
+//                System.out.println("Obtained Updated Products");
+//                Object[] bundledData = (Object[]) data[2];
+//                System.out.println(bundledData[0]);
+//                System.out.println(bundledData[1]);
+//                mainMenuModel.getClientModel().setFoodMenu((HashMap<String, Food>) bundledData[0]);
+//                mainMenuModel.getClientModel().setBeverageMenu((HashMap<String, Beverage>) bundledData[1]);
+//            }
+//        }
+//    } // end of handleIncomingData
+//
+//    private void sendData(String clientID, String code, Object data) {
+//        Object[] response = {clientID, code, data};
+//        try {
+//            out.writeObject(response);
+//            out.flush();
+//            out.reset();
+//        } catch (IOException e) {
+//            showServerErrorUI();
+//            throw new RuntimeException(e);
+//        }
+//    } // end of sendData
 
     public void setupClock() {
         Timeline timeline = new Timeline(
@@ -446,7 +452,12 @@ public class MainMenuClientPageController {
     private void setUpActionLogoutButton() {
         this.mainMenuView.getLogoutButton().setOnAction(event -> {
             String clientID = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getUsername().hashCode());
-            sendData(clientID, "LOGOUT", null);
+
+            try {
+                mainMenuModel.processLogout(clientID);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
             showLoginPage(event);
         });
     }
@@ -563,7 +574,22 @@ public class MainMenuClientPageController {
                         } else if (checkoutPageView.getOnlinePayment().isSelected() || checkoutPageView.getCashOnDelivery().isSelected()) {
                             String clientId = String.valueOf(checkoutPageModel.getCustomer().getName().hashCode());
                             Order order = checkoutPageModel.getOrderFromClient();
-                            sendData(clientId, "PROCESS_ORDER",order);
+
+                            //this try catch handles exceptions from the server by the RMI exception throws lists from OrderManagement interface
+                            try {
+                                Order successfulOrder = mainMenuModel.processCheckout(clientId, order); //order returned after processing from the server
+
+                                //if the order is successful
+                                mainMenuModel.getClientModel().orderProcessSuccessful(successfulOrder);
+                                PushNotification.toastSuccess("Checkout Status", "Your order has been placed");
+                                Platform.runLater(() -> clearCart(false));
+                            } catch (OutOfStockException e) {
+                                clearCart(false);
+                                PushNotification.toastError("Checkout Status", "Order unsuccessful due to stock shortage");
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
+//                            sendData(clientId, "PROCESS_ORDER",order);
 
                             checkoutPageView.closeCheckoutView();
 
@@ -816,7 +842,7 @@ public class MainMenuClientPageController {
             loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
             root = loader.load(); //load
 
-            loginPageController = new LoginPageController(loader.getController(), new LoginPageModel(registry)); //get controller
+            loginPageController = new LoginPageController(loader.getController(), new LoginPageModel(mainMenuModel.getRegistry())); //get controller
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

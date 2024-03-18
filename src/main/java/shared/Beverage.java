@@ -72,7 +72,7 @@ public class Beverage extends Product{
     /**This method is used to update quantity of the variation of the beverage for a given amount of order
      It accommodates multiple threads but will only allow one thread to make an update to a specific size
      @throws Exception when out of stocks*/
-    public void updateQuantity(String size, int count) throws Exception{
+    public void updateQuantity(String size, int count) throws OutOfStockException{
         switch (size) {
             case "small", "medium", "large" -> {
                 synchronized (this) {

@@ -48,7 +48,7 @@ public class Food extends Product {
 
     /**This method updates the quantity of the product for every successful order
      * @throws Exception when the quantity cannot accommodate the order*/
-    public synchronized void updateQuantity(int count) throws Exception{
+    public synchronized void updateQuantity(int count) throws OutOfStockException{
         int temp = quantity;
 
         quantity = quantity - count;

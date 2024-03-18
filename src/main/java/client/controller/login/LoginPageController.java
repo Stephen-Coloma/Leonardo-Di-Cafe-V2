@@ -88,7 +88,7 @@ public class LoginPageController {
     }
 
     /**This method parses the response from the server. If Login in successful, load the main menu client page*/
-    private void loadMainMenu(Object[] serverResponse, ActionEvent event) throws IOException {
+    private void loadMainMenu(Object[] serverResponse, ActionEvent event) throws IOException, NotBoundException {
 
         loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
         root = loader.load();
@@ -97,7 +97,7 @@ public class LoginPageController {
         Scene scene = new Scene(root);
 
         //when loading the main menu, pass the clientModel received from the server
-        mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel(serverResponse), loader.getController(), loginModel.getRegistry());
+        mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel(serverResponse, loginModel.getRegistry()), loader.getController());
         mainMenu.setPrimaryStage(stage);
 //        Thread thread = new Thread(() -> mainMenu.run());
 //        thread.setDaemon(true);
