@@ -1,4 +1,4 @@
-package shared.RMIInterfaces;
+package shared.rmiinterfaces;
 import shared.Customer;
 import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;

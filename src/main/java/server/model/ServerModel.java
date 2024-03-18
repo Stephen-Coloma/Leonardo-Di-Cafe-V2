@@ -59,97 +59,97 @@ public class ServerModel {
         //set up
         userLoggedIn = new ArrayList<>();
     }
+//
+//    /**Process client orders and updates the food menu if necessary
+//     * Algorithm
+//     * 1. From the list of products from order, check if there are available for it.
+//     * 2. If there are non, throw an exception
+//     * 3. If there are available products, then decrement it from the product quantity
+//     * 4. Save the order to orders list
+//     * 5. Return the successfulOrder
+//     * 2. */
+//    public Order processOrder(Order order) throws Exception {
+//        if (!checkAvailability(order)) { //order that is not successful
+//            return null;
+//        };
+//        updateMenu(order);
+//
+//        Order successfulOrder = new Order(order); //if it reaches here, means the order is successful
+//
+//        // therefore add to orderList for the admin
+//        orderList.add(successfulOrder);
+//
+//        //then add the order in the orderList of the customer in the customerList
+//        for (Customer customer: customerAccountList) {
+//            if (customer.getUsername().equals(order.getCustomer().getUsername())){
+//                customer.getOrderHistory().add(order); //add the successful order to the customerOrderHistory
+//            }
+//        }
+//
+//        System.out.println(foodMenu);
+//        return successfulOrder;
+//    }
 
-    /**Process client orders and updates the food menu if necessary
-     * Algorithm
-     * 1. From the list of products from order, check if there are available for it.
-     * 2. If there are non, throw an exception
-     * 3. If there are available products, then decrement it from the product quantity
-     * 4. Save the order to orders list
-     * 5. Return the successfulOrder
-     * 2. */
-    public Order processOrder(Order order) throws Exception {
-        if (!checkAvailability(order)) { //order that is not successful
-            return null;
-        };
-        updateMenu(order);
+//    /**This method update the product in the menu there are available products. Synchronization is handled here already.
+//     * @throws Exception if the product in the menu is out of stock */
+//    private void updateMenu(Order order) throws Exception {
+//        for (Product product: order.getOrders()) {
+//            if (product instanceof Food food){
+//                //cast it
+//                int orderQuantity = food.getQuantity();
+//
+//                Food productListed = foodMenu.get(food.getName());
+//
+//                //updates the menu
+//                productListed.updateQuantity(orderQuantity); // this throws an exception
+//            }else if (product instanceof Beverage beverage){
+//
+//                Beverage productListed = beverageMenu.get(beverage.getName());
+//
+//                //for each variation of the beverage order
+//                //small = 10
+//                //medium = 2
+//                // large = 3
+//                for (String variation: beverage.getSizeQuantity().keySet()) {
+//                    productListed.updateQuantity(variation, beverage.getSizeQuantity().get(variation));
+//                }
+//            }
+//        }
+//    }
 
-        Order successfulOrder = new Order(order); //if it reaches here, means the order is successful
-
-        // therefore add to orderList for the admin
-        orderList.add(successfulOrder);
-
-        //then add the order in the orderList of the customer in the customerList
-        for (Customer customer: customerAccountList) {
-            if (customer.getUsername().equals(order.getCustomer().getUsername())){
-                customer.getOrderHistory().add(order); //add the successful order to the customerOrderHistory
-            }
-        }
-
-        System.out.println(foodMenu);
-        return successfulOrder;
-    }
-
-    /**This method update the product in the menu there are available products. Synchronization is handled here already.
-     * @throws Exception if the product in the menu is out of stock */
-    private void updateMenu(Order order) throws Exception {
-        for (Product product: order.getOrders()) {
-            if (product instanceof Food food){
-                //cast it
-                int orderQuantity = food.getQuantity();
-
-                Food productListed = foodMenu.get(food.getName());
-
-                //updates the menu
-                productListed.updateQuantity(orderQuantity); // this throws an exception
-            }else if (product instanceof Beverage beverage){
-
-                Beverage productListed = beverageMenu.get(beverage.getName());
-
-                //for each variation of the beverage order
-                //small = 10
-                //medium = 2
-                // large = 3
-                for (String variation: beverage.getSizeQuantity().keySet()) {
-                    productListed.updateQuantity(variation, beverage.getSizeQuantity().get(variation));
-                }
-            }
-        }
-    }
-
-    /**This method checks the availability of products in the menu based on the customer's order.
-     * @param order, client of the order
-     * @throws Exception if the product menu is out of stock. */
-    private synchronized boolean checkAvailability(Order order) throws Exception{
-        for (Product product: order.getOrders()) {
-            if (product instanceof Food food){ //check first what type of product
-                //cast it
-
-                if (food.getQuantity() > foodMenu.get(food.getName()).getQuantity()){
-                    //checks if the order food quantity is greater than what is on the menu
-                    System.out.println("out of stock");
-                    return false;
-                    //throw new OutOfStockException("Out of stock");
-                }
-            }else if (product instanceof Beverage beverage){
-
-                //check if all variation
-                //small = 10
-                //medium = 2
-                // large = 3
-                for (String variation: beverage.getSizeQuantity().keySet()) {
-                    int variationQuantity = beverage.getVariationQuantity(variation); //small = 10;
-                    int variationAvailableOnMenu = beverageMenu.get(beverage.getName()).getVariationQuantity(variation);
-                    if (variationQuantity > variationAvailableOnMenu){
-                        //throw new OutOfStockException("Out of stock");
-                        System.out.println("out of stock");
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
+//    /**This method checks the availability of products in the menu based on the customer's order.
+//     * @param order, client of the order
+//     * @throws Exception if the product menu is out of stock. */
+//    private synchronized boolean checkAvailability(Order order) throws Exception{
+//        for (Product product: order.getOrders()) {
+//            if (product instanceof Food food){ //check first what type of product
+//                //cast it
+//
+//                if (food.getQuantity() > foodMenu.get(food.getName()).getQuantity()){
+//                    //checks if the order food quantity is greater than what is on the menu
+//                    System.out.println("out of stock");
+//                    return false;
+//                    //throw new OutOfStockException("Out of stock");
+//                }
+//            }else if (product instanceof Beverage beverage){
+//
+//                //check if all variation
+//                //small = 10
+//                //medium = 2
+//                // large = 3
+//                for (String variation: beverage.getSizeQuantity().keySet()) {
+//                    int variationQuantity = beverage.getVariationQuantity(variation); //small = 10;
+//                    int variationAvailableOnMenu = beverageMenu.get(beverage.getName()).getVariationQuantity(variation);
+//                    if (variationQuantity > variationAvailableOnMenu){
+//                        //throw new OutOfStockException("Out of stock");
+//                        System.out.println("out of stock");
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
 //    /**This method handles all the signup processes from the client.
 //     * @param customerSignup new account that tries to create an account.
@@ -210,18 +210,18 @@ public class ServerModel {
 //        this.userLoggedIn.remove(clientID);
 //    }
 
-    /**This method updates the reviews for the products*/
-    public void processReview(List<Product> ratedProducts){
-        for (Product product : ratedProducts) {
-            String productName = product.getName();
-            double review = product.getReview();
-            if (product instanceof Food){
-                foodMenu.get(productName).updateReview(review);
-            }else{
-                beverageMenu.get(productName).updateReview(review);
-            }
-        }
-    }
+//    /**This method updates the reviews for the products*/
+//    public void processReview(List<Product> ratedProducts){
+//        for (Product product : ratedProducts) {
+//            String productName = product.getName();
+//            double review = product.getReview();
+//            if (product instanceof Food){
+//                foodMenu.get(productName).updateReview(review);
+//            }else{
+//                beverageMenu.get(productName).updateReview(review);
+//            }
+//        }
+//    }
 
     public void setFoodMenu(HashMap<String, Food> foodMenu) {
         this.foodMenu = foodMenu;

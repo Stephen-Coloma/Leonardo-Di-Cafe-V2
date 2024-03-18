@@ -4,22 +4,19 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import server.controller.ServerController;
-import server.model.RMIServices.AuthenticationService;
+import server.model.rmiservices.AuthenticationService;
 import server.model.ServerModel;
 import server.model.listeners.ClientObserver;
+import server.model.rmiservices.OrderManagementService;
 import server.view.ServerView;
-import shared.RMIInterfaces.Authentication;
+import shared.rmiinterfaces.Authentication;
+import shared.rmiinterfaces.OrderManagement;
 import util.XMLUtility;
 
-import java.io.IOException;
-import java.net.*;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class Server extends Application implements ClientObserver {
@@ -66,6 +63,7 @@ public class Server extends Application implements ClientObserver {
             try {
                 //Remote object for Authentication
                 Authentication authentication = new AuthenticationService(model);
+                OrderManagement orderManagement = new OrderManagementService(model);
 
                 //TODO: Add remote objects here before adding to the registry
 
@@ -74,6 +72,7 @@ public class Server extends Application implements ClientObserver {
 
                 //binding the friendly name to the registry
                 registry.bind("authentication", authentication);
+                registry.bind("order management", orderManagement);
 
                 System.out.println("Server bound services successfully");
             } catch (RemoteException e) {

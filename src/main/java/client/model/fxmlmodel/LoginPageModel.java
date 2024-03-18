@@ -1,16 +1,11 @@
 package client.model.fxmlmodel;
 
 
-import client.Client;
-import server.model.RMIServices.AuthenticationService;
-import shared.RMIInterfaces.Authentication;
+import shared.rmiinterfaces.Authentication;
 import util.exception.AccountAlreadyLoggedIn;
 import util.exception.InvalidCredentialsException;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.registry.Registry;
 

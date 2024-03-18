@@ -1,10 +1,10 @@
-package server.model.RMIServices;
+package server.model.rmiservices;
 
 import server.model.ServerModel;
 import shared.Beverage;
 import shared.Customer;
 import shared.Food;
-import shared.RMIInterfaces.Authentication;
+import shared.rmiinterfaces.Authentication;
 import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
