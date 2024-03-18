@@ -598,14 +598,15 @@ public class MainMenuClientPageController {
                             } catch (OutOfStockException e) {
                                 clearCart(false);
                                 PushNotification.toastError("Checkout Status", "Order unsuccessful due to stock shortage");
+                                Platform.runLater(() -> clearCart(false));
                             } catch (RemoteException e) {
                                 throw new RuntimeException(e);
                             }
 //                            sendData(clientId, "PROCESS_ORDER",order);
 
+                            checkoutPageModel.getCart().clear();
                             checkoutPageView.closeCheckoutView();
 
-                            PushNotification.toastSuccess("Order", "Order uploaded to the system");
                         }
                     });
                 } catch (Exception e) {

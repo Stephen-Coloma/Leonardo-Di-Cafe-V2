@@ -19,7 +19,7 @@ public class OrderManagementService extends UnicastRemoteObject implements Order
     @Override
     public Order checkout(Order order) throws RemoteException, OutOfStockException {
         if (!checkAvailability(order)) { //order that is not successful
-            return null;
+            throw new OutOfStockException();
         };
         updateMenu(order);
 
