@@ -4,6 +4,8 @@ import shared.Beverage;
 import shared.Food;
 import shared.Order;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +16,41 @@ public class AnalyticsPageModel {
     private HashMap<String, Beverage> beverageList = new HashMap<>();
     private double sales;
     private int totalOrders;
+
+    /**
+     * Computes the sales made from a given date range
+     *
+     * @param startDate the starting date
+     * @param endDate the ending date
+     */
+    public void computeSales(LocalDate startDate, LocalDate endDate) {
+        totalOrders = 0;
+        sales = 0;
+
+        if (startDate == null && endDate == null) {
+            for (Order order : orderList) {
+                sales += order.getTotalPrice();
+                totalOrders++;
+            }
+        } else {
+            for (Order order : orderList) {
+                LocalDate timeStamp = LocalDate.parse(order.getTimeStamp(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+
+                if (endDate == null) {
+                    if (timeStamp.isEqual(startDate)) {
+                        sales += order.getTotalPrice();
+                        totalOrders++;
+                    }
+                } else {
+                    assert startDate != null;
+                    if (timeStamp.isAfter(startDate.minusDays(1)) && timeStamp.isBefore(endDate.plusDays(1))) {
+                        sales += order.getTotalPrice();
+                        totalOrders++;
+                    }
+                }
+            }
+        }
+    } // end of computeSales
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
@@ -42,14 +79,4 @@ public class AnalyticsPageModel {
     public int getTotalOrders() {
         return totalOrders;
     }
-
-    public void computeTotalOrders() {
-        totalOrders = orderList.size();
-    }
-
-    public void computeSales() {
-        for (Order order : orderList) {
-            sales += order.getTotalPrice();
-        }
-    } // end of computeSales
 } // end of AnalyticsPageModel
