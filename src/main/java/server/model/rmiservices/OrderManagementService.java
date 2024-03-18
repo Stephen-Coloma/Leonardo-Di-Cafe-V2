@@ -36,6 +36,7 @@ public class OrderManagementService extends UnicastRemoteObject implements Order
         }
 
         System.out.println(serverModel.getFoodMenu());
+        serverModel.notifyClients();
         return successfulOrder;
     }
 
@@ -112,6 +113,7 @@ public class OrderManagementService extends UnicastRemoteObject implements Order
                 serverModel.getBeverageMenu().get(productName).updateReview(review);
             }
         }
+        serverModel.notifyClients();
     }
 
     /**This removes the client from the server if the client logged out already*/

@@ -2,6 +2,8 @@ package client.model.fxmlmodel;
 
 import client.model.ClientModel;
 import shared.*;
+import shared.callback.Broadcast;
+import shared.rmiinterfaces.CallbackManagement;
 import shared.rmiinterfaces.OrderManagement;
 import util.exception.OutOfStockException;
 
@@ -19,6 +21,7 @@ public class MainMenuClientPageModel {
     private final ClientModel clientModel;
     private Registry registry;
     private OrderManagement orderManagement;
+    private CallbackManagement callbackManagement;
 //    private Socket socket;
 //    private ObjectOutputStream out;
 //    private ObjectInputStream in;
@@ -34,6 +37,7 @@ public class MainMenuClientPageModel {
 
         this.registry = registry;
         this.orderManagement = (OrderManagement) registry.lookup("order management");
+        callbackManagement = (CallbackManagement) registry.lookup("callback management");
     }
 
     public Order processCheckout(String clientId, Order order) throws OutOfStockException, RemoteException {
@@ -47,6 +51,11 @@ public class MainMenuClientPageModel {
 
     public void processLogout(String clientId) throws RemoteException {
         orderManagement.logout(clientId);
+        callbackManagement.removeClientCallback(clientId);
+    }
+
+    public void registerCallback(String clientID, Broadcast clientCallback) throws RemoteException {
+        callbackManagement.addClientCallback(clientID, clientCallback);
     }
 
     public ClientModel getClientModel() {

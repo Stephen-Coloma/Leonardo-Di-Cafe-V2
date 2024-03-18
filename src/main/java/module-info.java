@@ -35,4 +35,6 @@ module LeonardoDiCafe {
     exports client.controller.orderhistory;
     exports shared.rmiinterfaces;
     opens client.controller.orderhistory to javafx.fxml;
+
+    exports shared.callback to java.rmi;
 }

@@ -6,10 +6,11 @@ import javafx.stage.Stage;
 import server.controller.ServerController;
 import server.model.rmiservices.AuthenticationService;
 import server.model.ServerModel;
-import server.model.listeners.ClientObserver;
+import server.model.rmiservices.CallbackManagementService;
 import server.model.rmiservices.OrderManagementService;
 import server.view.ServerView;
 import shared.rmiinterfaces.Authentication;
+import shared.rmiinterfaces.CallbackManagement;
 import shared.rmiinterfaces.OrderManagement;
 import util.XMLUtility;
 
@@ -19,7 +20,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 
-public class Server extends Application implements ClientObserver {
+public class Server extends Application {
     private static final int PORT = 2000;
 //    private static final int THREAD_POOL_SIZE = 20;
 //    private static final int BROADCAST_PORT = 12345;
@@ -35,7 +36,6 @@ public class Server extends Application implements ClientObserver {
         stage.getIcons().add(new Image(getClass().getResource("/images/server/server_app_logo.png").toExternalForm()));
 
         model = new ServerModel();
-        model.addObserver(this);
         view = new ServerView(stage);
         view.runInterface();
 
@@ -64,6 +64,7 @@ public class Server extends Application implements ClientObserver {
                 //Remote object for Authentication
                 Authentication authentication = new AuthenticationService(model);
                 OrderManagement orderManagement = new OrderManagementService(model);
+                CallbackManagement callbackManagement = new CallbackManagementService(model);
 
                 //TODO: Add remote objects here before adding to the registry
 
@@ -73,6 +74,7 @@ public class Server extends Application implements ClientObserver {
                 //binding the friendly name to the registry
                 registry.bind("authentication", authentication);
                 registry.bind("order management", orderManagement);
+                registry.bind("callback management", callbackManagement);
 
                 System.out.println("Server bound services successfully");
             } catch (RemoteException e) {
@@ -100,12 +102,6 @@ public class Server extends Application implements ClientObserver {
 //            }
         }).start();
     } // end of bindServices
-
-    /**TODO: Temporary!!*/
-    @Override
-    public void onDataChanged() {
-
-    }
 
 //    /**
 //     * Starts broadcasting the server's presence to all machines connected in the local network.

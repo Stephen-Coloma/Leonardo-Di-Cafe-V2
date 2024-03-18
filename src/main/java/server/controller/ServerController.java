@@ -9,6 +9,7 @@ import server.view.ServerView;
 import shared.Customer;
 import shared.Order;
 import shared.Product;
+import shared.callback.Broadcast;
 import util.PushNotification;
 import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class ServerController implements MainMenuAdminObserver {
@@ -167,7 +169,7 @@ public class ServerController implements MainMenuAdminObserver {
                 model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
                 PushNotification.toastSuccess("New Product", "Beverage added to the list");
             }
-            model.notifyObservers();
+            model.notifyClients();
         }
     } // end of notifyMenuChanges
 

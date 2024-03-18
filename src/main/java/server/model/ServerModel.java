@@ -1,15 +1,12 @@
 package server.model;
 
 import server.controller.ServerController;
-import server.model.listeners.ClientObserver;
 import shared.*;
+import shared.callback.Broadcast;
 import util.XMLUtility;
-import util.exception.AccountAlreadyLoggedIn;
-import util.exception.AccountExistsException;
-import util.exception.InvalidCredentialsException;
-import util.exception.OutOfStockException;
 
 import java.io.File;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,23 +19,30 @@ import java.util.List;
  */
 public class ServerModel {
     private final List<ServerController> serverControllers = new ArrayList<>();
-    private final List<ClientObserver> observers = new ArrayList<>();
+    private HashMap<String, Broadcast> clientCallbacks = new HashMap<>();
     private HashMap<String, Food> foodMenu; //Hashmap for faster searching
     private HashMap<String, Beverage> beverageMenu;
     private final List<Customer> customerAccountList;
     private List<Order> orderList; //List for listing only orders
     private final List<String> userLoggedIn;
 
-    public void addObserver(ClientObserver observer) {
-        observers.add(observer);
-    }
+    public void notifyClients() {
+        try {
+            for (Broadcast client : clientCallbacks.values()) {
+                client.updateMenu(foodMenu, beverageMenu);
+            }
+        } catch (RemoteException remoteException) {
+            remoteException.printStackTrace();
+        }
 
-    public void notifyObservers() {
+        /*
         System.out.println("Notifying Controllers");
         System.out.println(observers.size());
         for (ClientObserver observer : observers) {
             observer.onDataChanged();
         }
+
+         */
     }
 
     public void registerServerController(ServerController controller) {
@@ -255,11 +259,11 @@ public class ServerModel {
         return serverControllers;
     }
 
-    public List<ClientObserver> getObservers() {
-        return observers;
-    }
-
     public List<String> getUserLoggedIn() {
         return userLoggedIn;
+    }
+
+    public HashMap<String, Broadcast> getClientCallbacks() {
+        return clientCallbacks;
     }
 }

@@ -5,6 +5,7 @@ import client.controller.checkout.CheckoutPageController;
 import client.controller.checkout.CartItemCardController;
 import client.controller.login.LoginPageController;
 import client.controller.orderhistory.OrderHistoryPageController;
+import client.model.ClientCallback;
 import client.model.fxmlmodel.*;
 import client.view.fxmlview.CheckoutPageView;
 import client.view.fxmlview.MainMenuClientPageView;
@@ -72,6 +73,8 @@ public class MainMenuClientPageController {
         this.mainMenuView = mainMenuView;
         this.mainMenuModel = mainMenuModel;
 
+        registerClientCallback();
+
         // setting up the time and date labels
         setupClock();
         setupDate();
@@ -86,6 +89,15 @@ public class MainMenuClientPageController {
         setComponentActions();
 
         debounceTimer = new Timer();
+    }
+
+    private void registerClientCallback() {
+        try {
+            ClientCallback clientCallback = new ClientCallback(mainMenuModel.getClientModel());
+            mainMenuModel.registerCallback(String.valueOf(mainMenuModel.getClientModel().getCustomer().getName().hashCode()), clientCallback);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setComponentActions() {
