@@ -1,75 +1,85 @@
 package client.model.fxmlmodel;
 
 
-import client.Client;
+import shared.rmiinterfaces.Authentication;
+import util.exception.AccountAlreadyLoggedIn;
+import util.exception.InvalidCredentialsException;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.rmi.NotBoundException;
+import java.rmi.registry.Registry;
 
 /*This model represents the model for login. The model will hold all the processes for the application*/
 public class LoginPageModel {
     private String username;
     private String password;
-    private Socket socket;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
+//    private Socket socket;
+//    private ObjectOutputStream out;
+//    private ObjectInputStream in;
 
     private Object[] serverResponse;
+    private Registry registry;
+
+    public LoginPageModel(Registry registry){
+        this.registry = registry;
+    }
 
     /**This method tries to make connection to the server
      * @throws ClassNotFoundException
      *
      * Exceptions will be handled by the LoginPage Controller*/
-    public void authenticate(String username, String password) throws RuntimeException, IOException, ClassNotFoundException {
-            String clientID = String.valueOf(username.hashCode());
-            String requestType = "LOGIN";
-            String[] credentials = {username, password};
+    public void authenticate(String username, String password) throws RuntimeException, IOException, ClassNotFoundException, NotBoundException, InvalidCredentialsException, AccountAlreadyLoggedIn {
+        Authentication authentication = (Authentication) registry.lookup("authentication");
+        serverResponse = authentication.login(username, password);
 
-            socket = new Socket(Client.IP_ADDRESS, Client.PORT);
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in  = new ObjectInputStream(socket.getInputStream());
 
-            sendData(clientID, requestType, credentials);
-            Object[] response = (Object[]) in.readObject();
-
-            //Close the connection when it is not login successful
-            if (!response[1].equals("LOGIN_SUCCESSFUL")){
-                socket.close();
-                in.close();
-                out.close();
-            }
-
-            serverResponse = response;
+//            String clientID = String.valueOf(username.hashCode());
+//            String requestType = "LOGIN";
+//            String[] credentials = {username, password};
+//
+//            socket = new Socket(Client.IP_ADDRESS, Client.PORT);
+//            out = new ObjectOutputStream(socket.getOutputStream());
+//            in  = new ObjectInputStream(socket.getInputStream());
+//
+//            sendData(clientID, requestType, credentials);
+//            Object[] response = (Object[]) in.readObject();
+//
+//            //Close the connection when it is not login successful
+//            if (!response[1].equals("LOGIN_SUCCESSFUL")){
+//                socket.close();
+//                in.close();
+//                out.close();
+//            }
+//
+//            serverResponse = response;
     }
 
-    /**Helper method that sends data to server*/
-    private void sendData(String clientID, String requestType, Object data) throws IOException{
-        Object[] request = new Object[]{clientID, requestType, data};
-        out.writeObject(request);
-        out.flush();
-    }
+//    /**Helper method that sends data to server*/
+//    private void sendData(String clientID, String requestType, Object data) throws IOException{
+//        Object[] request = new Object[]{clientID, requestType, data};
+//        out.writeObject(request);
+//        out.flush();
+//    }
 
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public ObjectOutputStream getOut() {
-        return out;
-    }
-
-    public void setOut(ObjectOutputStream out) {
-        this.out = out;
-    }
-
-    public ObjectInputStream getIn() {
-        return in;
-    }
-
-    public void setIn(ObjectInputStream in) {
-        this.in = in;
-    }
+//    public Socket getSocket() {
+//        return socket;
+//    }
+//
+//    public ObjectOutputStream getOut() {
+//        return out;
+//    }
+//
+//    public void setOut(ObjectOutputStream out) {
+//        this.out = out;
+//    }
+//
+//    public ObjectInputStream getIn() {
+//        return in;
+//    }
+//
+//    public void setIn(ObjectInputStream in) {
+//        this.in = in;
+//    }
 
     public Object[] getServerResponse() {
         return serverResponse;
@@ -89,5 +99,13 @@ public class LoginPageModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Registry getRegistry() {
+        return registry;
+    }
+
+    public void setRegistry(Registry registry) {
+        this.registry = registry;
     }
 }

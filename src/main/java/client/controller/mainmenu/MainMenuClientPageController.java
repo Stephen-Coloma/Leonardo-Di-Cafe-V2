@@ -5,6 +5,7 @@ import client.controller.checkout.CheckoutPageController;
 import client.controller.checkout.CartItemCardController;
 import client.controller.login.LoginPageController;
 import client.controller.orderhistory.OrderHistoryPageController;
+import client.model.ClientCallback;
 import client.model.fxmlmodel.*;
 import client.view.fxmlview.CheckoutPageView;
 import client.view.fxmlview.MainMenuClientPageView;
@@ -35,12 +36,16 @@ import shared.Product;
 import util.ImageUtility;
 import util.LoadingScreenUtility;
 import util.PushNotification;
+import util.exception.OutOfStockException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -68,6 +73,8 @@ public class MainMenuClientPageController {
         this.mainMenuView = mainMenuView;
         this.mainMenuModel = mainMenuModel;
 
+        registerClientCallback();
+
         // setting up the time and date labels
         setupClock();
         setupDate();
@@ -82,6 +89,15 @@ public class MainMenuClientPageController {
         setComponentActions();
 
         debounceTimer = new Timer();
+    }
+
+    private void registerClientCallback() {
+        try {
+            ClientCallback clientCallback = new ClientCallback(mainMenuModel.getClientModel());
+            mainMenuModel.registerCallback(String.valueOf(mainMenuModel.getClientModel().getCustomer().getName().hashCode()), clientCallback);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setComponentActions() {
@@ -133,7 +149,12 @@ public class MainMenuClientPageController {
                         orderHistoryPageController.getView().closeCheckoutView();
                         if (!ratedProducts.isEmpty()){
                             String clientId = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getName().hashCode());
-                            sendData(clientId, "PROCESS_REVIEW", ratedProducts);
+
+                            try {
+                                mainMenuModel.processReview(clientId, ratedProducts);
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
                             PushNotification.toastSuccess("Review Sent", "Thank You for your reviews!");
                         }
                     });
@@ -158,74 +179,74 @@ public class MainMenuClientPageController {
         return new ArrayList<>(uniqueProducts);
     }
 
-    public void run() {
-        try {
-            primaryStage.setOnCloseRequest(event -> {
-                String clientID = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getUsername().hashCode());
-                sendData(clientID, "LOGOUT", null);
-                closeResources();
-                System.exit(0);
-            });
+//    public void run() {
+//        try {
+//            primaryStage.setOnCloseRequest(event -> {
+//                String clientID = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getUsername().hashCode());
+//                sendData(clientID, "LOGOUT", null);
+//                closeResources();
+//                System.exit(0);
+//            });
+//
+//            listenToHost();
+//        } catch (IOException | ClassNotFoundException ioException) {
+//            ioException.printStackTrace();
+//        }
+//    } // end of run
 
-            listenToHost();
-        } catch (IOException | ClassNotFoundException ioException) {
-            ioException.printStackTrace();
-        }
-    } // end of run
+//    private void listenToHost() throws IOException, ClassNotFoundException {
+//        try {
+//            while (true) {
+//                Object[] data = (Object[]) in.readObject();
+//                if (data != null) {
+//                    handleIncomingData(data);
+//                }
+//            }
+//        } catch (SocketException e) {
+//            System.out.println("Socket closed by the server.");
+//        }
+//    } // end of listenToHost
 
-    private void listenToHost() throws IOException, ClassNotFoundException {
-        try {
-            while (true) {
-                Object[] data = (Object[]) in.readObject();
-                if (data != null) {
-                    handleIncomingData(data);
-                }
-            }
-        } catch (SocketException e) {
-            System.out.println("Socket closed by the server.");
-        }
-    } // end of listenToHost
-
-    private void handleIncomingData(Object[] data) {
-        String dataCode = (String) data[1];
-        System.out.println("received data from server");
-        System.out.println(data[0]);
-        System.out.println(data[1]);
-        System.out.println(data[2]);
-        switch (dataCode) {
-            case "PRODUCT_CHANGES" -> {
-            }
-            case "PROCESS_ORDER_SUCCESSFUL" -> {
-                mainMenuModel.getClientModel().orderProcessSuccessful((Order) data[2]);
-                PushNotification.toastSuccess("Checkout Status", "Your order has been placed");
-                Platform.runLater(() -> clearCart(false));
-            }
-            case "PROCESS_ORDER_FAILED" -> {
-                clearCart(false);
-                PushNotification.toastError("Checkout Status", "Order unsuccessful due to stock shortage");
-            }
-            case "DATA_UPDATE" -> {
-                System.out.println("Obtained Updated Products");
-                Object[] bundledData = (Object[]) data[2];
-                System.out.println(bundledData[0]);
-                System.out.println(bundledData[1]);
-                mainMenuModel.getClientModel().setFoodMenu((HashMap<String, Food>) bundledData[0]);
-                mainMenuModel.getClientModel().setBeverageMenu((HashMap<String, Beverage>) bundledData[1]);
-            }
-        }
-    } // end of handleIncomingData
-
-    private void sendData(String clientID, String code, Object data) {
-        Object[] response = {clientID, code, data};
-        try {
-            out.writeObject(response);
-            out.flush();
-            out.reset();
-        } catch (IOException e) {
-            showServerErrorUI();
-            throw new RuntimeException(e);
-        }
-    } // end of sendData
+//    private void handleIncomingData(Object[] data) {
+//        String dataCode = (String) data[1];
+//        System.out.println("received data from server");
+//        System.out.println(data[0]);
+//        System.out.println(data[1]);
+//        System.out.println(data[2]);
+//        switch (dataCode) {
+//            case "PRODUCT_CHANGES" -> {
+//            }
+//            case "PROCESS_ORDER_SUCCESSFUL" -> {
+//                mainMenuModel.getClientModel().orderProcessSuccessful((Order) data[2]);
+//                PushNotification.toastSuccess("Checkout Status", "Your order has been placed");
+//                Platform.runLater(() -> clearCart(false));
+//            }
+//            case "PROCESS_ORDER_FAILED" -> {
+//                clearCart(false);
+//                PushNotification.toastError("Checkout Status", "Order unsuccessful due to stock shortage");
+//            }
+//            case "DATA_UPDATE" -> {
+//                System.out.println("Obtained Updated Products");
+//                Object[] bundledData = (Object[]) data[2];
+//                System.out.println(bundledData[0]);
+//                System.out.println(bundledData[1]);
+//                mainMenuModel.getClientModel().setFoodMenu((HashMap<String, Food>) bundledData[0]);
+//                mainMenuModel.getClientModel().setBeverageMenu((HashMap<String, Beverage>) bundledData[1]);
+//            }
+//        }
+//    } // end of handleIncomingData
+//
+//    private void sendData(String clientID, String code, Object data) {
+//        Object[] response = {clientID, code, data};
+//        try {
+//            out.writeObject(response);
+//            out.flush();
+//            out.reset();
+//        } catch (IOException e) {
+//            showServerErrorUI();
+//            throw new RuntimeException(e);
+//        }
+//    } // end of sendData
 
     public void setupClock() {
         Timeline timeline = new Timeline(
@@ -443,7 +464,12 @@ public class MainMenuClientPageController {
     private void setUpActionLogoutButton() {
         this.mainMenuView.getLogoutButton().setOnAction(event -> {
             String clientID = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getUsername().hashCode());
-            sendData(clientID, "LOGOUT", null);
+
+            try {
+                mainMenuModel.processLogout(clientID);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
             showLoginPage(event);
         });
     }
@@ -560,11 +586,27 @@ public class MainMenuClientPageController {
                         } else if (checkoutPageView.getOnlinePayment().isSelected() || checkoutPageView.getCashOnDelivery().isSelected()) {
                             String clientId = String.valueOf(checkoutPageModel.getCustomer().getName().hashCode());
                             Order order = checkoutPageModel.getOrderFromClient();
-                            sendData(clientId, "PROCESS_ORDER",order);
 
+                            //this try catch handles exceptions from the server by the RMI exception throws lists from OrderManagement interface
+                            try {
+                                Order successfulOrder = mainMenuModel.processCheckout(clientId, order); //order returned after processing from the server
+
+                                //if the order is successful
+                                mainMenuModel.getClientModel().orderProcessSuccessful(successfulOrder);
+                                PushNotification.toastSuccess("Checkout Status", "Your order has been placed");
+                                Platform.runLater(() -> clearCart(false));
+                            } catch (OutOfStockException e) {
+                                clearCart(false);
+                                PushNotification.toastError("Checkout Status", "Order unsuccessful due to stock shortage");
+                                Platform.runLater(() -> clearCart(false));
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
+//                            sendData(clientId, "PROCESS_ORDER",order);
+
+                            checkoutPageModel.getCart().clear();
                             checkoutPageView.closeCheckoutView();
 
-                            PushNotification.toastSuccess("Order", "Order uploaded to the system");
                         }
                     });
                 } catch (Exception e) {
@@ -813,7 +855,7 @@ public class MainMenuClientPageController {
             loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
             root = loader.load(); //load
 
-            loginPageController = new LoginPageController(loader.getController(), new LoginPageModel()); //get controller
+            loginPageController = new LoginPageController(loader.getController(), new LoginPageModel(mainMenuModel.getRegistry())); //get controller
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

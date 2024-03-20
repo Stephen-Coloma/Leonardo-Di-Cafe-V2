@@ -9,6 +9,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,6 +42,10 @@ public class AnalyticsPageView implements Initializable {
     private TableColumn<Beverage, String > beverageProductsColumn;
     @FXML
     private TableColumn<Beverage, Integer> beverageProductsOrderCountColumn;
+    @FXML
+    private DatePicker startDate;
+    @FXML
+    private DatePicker endDate;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,7 +53,6 @@ public class AnalyticsPageView implements Initializable {
         foodProductsOrderCountColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAmountSold()).asObject());
         beverageProductsColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         beverageProductsOrderCountColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAmountSold()).asObject());
-
     } // end of initialize
 
     public static <T> T loadAnalyticsPage(BorderPane borderPane) {
@@ -85,5 +89,13 @@ public class AnalyticsPageView implements Initializable {
 
     public void setTotalOrdersLabel(String value) {
         totalOrdersLabel.setText(value);
+    }
+
+    public DatePicker getStartDate() {
+        return startDate;
+    }
+
+    public DatePicker getEndDate() {
+        return endDate;
     }
 } // end of AnalyticsPageView

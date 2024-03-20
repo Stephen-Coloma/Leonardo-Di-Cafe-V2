@@ -106,7 +106,7 @@
                <children>
                   <HBox prefHeight="75.0" prefWidth="1000.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="500.0" spacing="10.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="68.0" prefWidth="824.0" spacing="30.0">
                            <padding>
                               <Insets left="25.0" right="25.0" />
                            </padding>
@@ -115,7 +115,12 @@
                                  <font>
                                     <Font name="Copperplate Gothic Light" size="22.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
                               </Label>
+                              <DatePicker fx:id="startDate" promptText="Start Date" />
+                              <DatePicker fx:id="endDate" layoutX="182.0" layoutY="32.0" promptText="End Date" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="500.0" spacing="10.0">

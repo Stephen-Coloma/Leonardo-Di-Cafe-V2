@@ -9,6 +9,7 @@ import server.view.ServerView;
 import shared.Customer;
 import shared.Order;
 import shared.Product;
+import shared.callback.Broadcast;
 import util.PushNotification;
 import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
@@ -19,14 +20,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class ServerController implements MainMenuAdminObserver {
     private final ServerModel model;
     private final ServerView view;
-    private Socket clientSocket;
-    private ObjectInputStream streamReader;
-    private ObjectOutputStream streamWriter;
+//    private Socket clientSocket;
+//    private ObjectInputStream streamReader;
+//    private ObjectOutputStream streamWriter;
     private MainMenuAdminModel mainMenuAdminModel;
 
     public ServerController(ServerModel model, ServerView view) {
@@ -34,9 +36,9 @@ public class ServerController implements MainMenuAdminObserver {
         this. view = view;
     } // end of constructor
 
-    public void setClientSocket(Socket clientSocket) {
-        this.clientSocket = clientSocket;
-    } // end of setClientSocket
+//    public void setClientSocket(Socket clientSocket) {
+//        this.clientSocket = clientSocket;
+//    } // end of setClientSocket
 
     private void setComponentActions() {
         Platform.runLater(() -> {
@@ -53,20 +55,20 @@ public class ServerController implements MainMenuAdminObserver {
         });
     } // end of setComponentActions
 
-    public void run() {
-        try {
-            streamReader = new ObjectInputStream(clientSocket.getInputStream());
-            streamWriter = new ObjectOutputStream(clientSocket.getOutputStream());
-
-            model.registerServerController(this);
-
-            listenToClient();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    } // end of run
+//    public void run() {
+//        try {
+//            streamReader = new ObjectInputStream(clientSocket.getInputStream());
+//            streamWriter = new ObjectOutputStream(clientSocket.getOutputStream());
+//
+//            model.registerServerController(this);
+//
+//            listenToClient();
+//        } catch (IOException ioException) {
+//            ioException.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//    } // end of run
 
     public void initializeAdminInterface() {
         System.out.println("Obtained Main Menu Controller");
@@ -74,82 +76,82 @@ public class ServerController implements MainMenuAdminObserver {
         System.out.println("Successfully added actions");
     } // end of initializeAdminInterface
 
-    private void listenToClient() throws IOException, ClassNotFoundException {
-        try {
-            while (!clientSocket.isClosed()) {
-                Object[] data = (Object[]) streamReader.readObject();
-                if (data != null) {
-                    handleClientRequest(data);
-                }
-            }
-        } catch (EOFException exception) {
-            System.out.println("Client disconnected: " + clientSocket.getInetAddress());
-            closeConnection();
-        }
-    } // end of listenToClient
+//    private void listenToClient() throws IOException, ClassNotFoundException {
+//        try {
+//            while (!clientSocket.isClosed()) {
+//                Object[] data = (Object[]) streamReader.readObject();
+//                if (data != null) {
+//                    handleClientRequest(data);
+//                }
+//            }
+//        } catch (EOFException exception) {
+//            System.out.println("Client disconnected: " + clientSocket.getInetAddress());
+//            closeConnection();
+//        }
+//    } // end of listenToClient
 
-    private void handleClientRequest(Object[] message) {
-        String requestCode = (String) message[1];
-        System.out.println("\nServer received request from client id: " + message[0]);
-        System.out.println("Request Code: " + message[1]);
-        switch (requestCode) {
-            case "LOGIN" -> {
-                try {
-                    String[] information = (String[]) message[2];
-                    String username = information[0];
-                    String password = information[1];
-                    Object[] client = model.processLogin(username, password);
-
-                    sendData(String.valueOf(((Customer) client[0]).getUsername().hashCode()), "LOGIN_SUCCESSFUL", client);
-                } catch (InvalidCredentialsException exception) {
-                    sendData("", "LOGIN_FAILED", null);
-                }catch (AccountAlreadyLoggedIn exception) {
-                    sendData("", "ALREADY_LOGGED_IN", false);
-                }catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            case "SIGN_UP" -> {
-                try {
-                    Customer client = (Customer) message[2];
-                    model.processSignUp(client);
-                    sendData(String.valueOf(client.getUsername().hashCode()), "SIGN_UP_SUCCESSFUL", true);
-                } catch (AccountExistsException accountExistsException) {
-                    sendData("", "SIGN_UP_FAILED", false);
-                } catch (Exception e){
-                    throw new RuntimeException();
-                }
-            }
-            case "PROCESS_ORDER" -> {
-                try {
-                    Order order = model.processOrder((Order) message[2]);
-                    if (order != null) {
-                        sendData(String.valueOf(message[0]), "PROCESS_ORDER_SUCCESSFUL", order);
-                        model.notifyObservers();
-                    } else {
-                        sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
-                    }
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    System.err.println("Error during the order processing");
-                }
-            }
-            case "PROCESS_REVIEW" -> {
-                try {
-                    List<Product> ratedProducts = (List<Product>) message[2];
-                    System.out.println("PROCESSING REVIEW");
-                    model.processReview(ratedProducts);
-                    model.notifyObservers();
-                } catch (Exception exception) {
-                    System.err.println("Error during the review processing");
-                }
-            }
-            case "LOGOUT" ->{
-                String clientID = (String) message[0];
-                this.model.processLogout(clientID);
-            }
-        }
-    } // end of handleClientRequest
+//    private void handleClientRequest(Object[] message) {
+//        String requestCode = (String) message[1];
+//        System.out.println("\nServer received request from client id: " + message[0]);
+//        System.out.println("Request Code: " + message[1]);
+//        switch (requestCode) {
+//            case "LOGIN" -> {
+//                try {
+//                    String[] information = (String[]) message[2];
+//                    String username = information[0];
+//                    String password = information[1];
+//                    Object[] client = model.processLogin(username, password);
+//
+//                    sendData(String.valueOf(((Customer) client[0]).getUsername().hashCode()), "LOGIN_SUCCESSFUL", client);
+//                } catch (InvalidCredentialsException exception) {
+//                    sendData("", "LOGIN_FAILED", null);
+//                }catch (AccountAlreadyLoggedIn exception) {
+//                    sendData("", "ALREADY_LOGGED_IN", false);
+//                }catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//            case "SIGN_UP" -> {
+//                try {
+//                    Customer client = (Customer) message[2];
+//                    model.processSignUp(client);
+//                    sendData(String.valueOf(client.getUsername().hashCode()), "SIGN_UP_SUCCESSFUL", true);
+//                } catch (AccountExistsException accountExistsException) {
+//                    sendData("", "SIGN_UP_FAILED", false);
+//                } catch (Exception e){
+//                    throw new RuntimeException();
+//                }
+//            }
+//            case "PROCESS_ORDER" -> {
+//                try {
+//                    Order order = model.processOrder((Order) message[2]);
+//                    if (order != null) {
+//                        sendData(String.valueOf(message[0]), "PROCESS_ORDER_SUCCESSFUL", order);
+//                        model.notifyObservers();
+//                    } else {
+//                        sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
+//                    }
+//                } catch (Exception exception) {
+//                    exception.printStackTrace();
+//                    System.err.println("Error during the order processing");
+//                }
+//            }
+//            case "PROCESS_REVIEW" -> {
+//                try {
+//                    List<Product> ratedProducts = (List<Product>) message[2];
+//                    System.out.println("PROCESSING REVIEW");
+//                    model.processReview(ratedProducts);
+//                    model.notifyObservers();
+//                } catch (Exception exception) {
+//                    System.err.println("Error during the review processing");
+//                }
+//            }
+//            case "LOGOUT" ->{
+//                String clientID = (String) message[0];
+//                this.model.processLogout(clientID);
+//            }
+//        }
+//    } // end of handleClientRequest
 
     @Override
     public void notifyMenuChanges(String code, boolean menuChanges) {
@@ -167,30 +169,30 @@ public class ServerController implements MainMenuAdminObserver {
                 model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
                 PushNotification.toastSuccess("New Product", "Beverage added to the list");
             }
-            model.notifyObservers();
+            model.notifyClients();
         }
     } // end of notifyMenuChanges
 
-    public synchronized void sendData(String clientID, String code, Object data) {
-        Object[] response = {clientID, code, data};
-        try {
-            if (!clientSocket.isClosed()) {
-                streamWriter.writeObject(response);
-                streamWriter.flush();
-                streamWriter.reset();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    } // end of sendData
+//    public synchronized void sendData(String clientID, String code, Object data) {
+//        Object[] response = {clientID, code, data};
+//        try {
+//            if (!clientSocket.isClosed()) {
+//                streamWriter.writeObject(response);
+//                streamWriter.flush();
+//                streamWriter.reset();
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    } // end of sendData
 
-    private void closeConnection() {
-        try {
-            streamReader.close();
-            streamWriter.close();
-            clientSocket.close();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
+//    private void closeConnection() {
+//        try {
+//            streamReader.close();
+//            streamWriter.close();
+//            clientSocket.close();
+//        } catch (IOException ioException) {
+//            ioException.printStackTrace();
+//        }
+//    }
 } // end of ServerController
