@@ -12,6 +12,7 @@ import server.view.ServerView;
 import shared.rmiinterfaces.Authentication;
 import shared.rmiinterfaces.CallbackManagement;
 import shared.rmiinterfaces.OrderManagement;
+import util.JSONUtility;
 import util.XMLUtility;
 
 import java.rmi.AlreadyBoundException;
@@ -44,8 +45,8 @@ public class Server extends Application {
 
         //implement an action when the window is closed
         view.getStage().setOnCloseRequest(windowEvent -> {
-            XMLUtility.saveFoodMenu(model.getFoodMenu());
-            XMLUtility.saveBeverageMenu(model.getBeverageMenu());
+            JSONUtility.saveFoodMenu(model.getFoodMenu());
+            JSONUtility.saveBeverageMenu(model.getBeverageMenu());
             XMLUtility.saveOrders(model.getOrderList());
             XMLUtility.saveCustomerAccounts(model.getCustomerAccountList());
         });

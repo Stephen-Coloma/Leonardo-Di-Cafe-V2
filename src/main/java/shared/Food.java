@@ -15,6 +15,13 @@ public class Food extends Product {
         this.price = price;
     }
 
+    //constructors
+    public Food(String name, char type, double review, int reviewCount, Object[] image, String description, int quantity, double price, int amountSold) {
+        super(name, type, review, reviewCount, image, description, amountSold);
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     /**This constructor will only be used for client side rating function*/
     public Food(String name, char type, double review){
         super(name, type, review, 0, null, null);

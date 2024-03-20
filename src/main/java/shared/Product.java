@@ -28,6 +28,17 @@ public abstract class Product implements Serializable{
         this.description = description;
     }
 
+    /**A constructor initializes the details of the classes whose direct descendant of this class.*/
+    public Product(String name, char type, double review, int reviewCount, Object[] image, String description, int amountSold) {
+        this.name = name;
+        this.type = type;
+        this.review = review;
+        this.image = image;
+        this.reviewCount = reviewCount;
+        this.description = description;
+        this.amountSold=amountSold;
+    }
+
     //getters setters
     public String getName(){
         return name;

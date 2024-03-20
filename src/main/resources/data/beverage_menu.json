@@ -1,0 +1,90 @@
+{
+  "Midnight Mocha Iced Coffee": {
+    "sizeQuantity": {
+      "small": 15,
+      "large": 5,
+      "medium": 10
+    },
+    "sizePrice": {
+      "small": 10.0,
+      "large": 20.0,
+      "medium": 15.0
+    },
+    "name": "Matcha Frosted Iced Latte",
+    "type": "b",
+    "review": 4.5,
+    "reviewCount": 23,
+    "image": [
+      "Black Iced Coffee.png",
+      null
+    ],
+    "description": "A refreshing blend of rich coffee with a hint of chocolate, perfect for any time of the day.",
+    "amountSold": 0
+  },
+  "Matcha Frosted Iced Latte": {
+    "sizeQuantity": {
+      "small": 15,
+      "large": 5,
+      "medium": 10
+    },
+    "sizePrice": {
+      "small": 10.0,
+      "large": 20.0,
+      "medium": 15.0
+    },
+    "name": "Matcha Frosted Iced Latte",
+    "type": "b",
+    "review": 4.4,
+    "reviewCount": 12,
+    "image": [
+      "Black Iced Coffee.png",
+      null
+    ],
+    "description": "A refreshing combination of matcha and frosted milk, served over ice for a delightful treat.",
+    "amountSold": 0
+  },
+  "Mocha Madness Frappe": {
+    "sizeQuantity": {
+      "small": 15,
+      "large": 5,
+      "medium": 10
+    },
+    "sizePrice": {
+      "small": 10.0,
+      "large": 20.0,
+      "medium": 15.0
+    },
+    "name": "Mocha Madness Frappe",
+    "type": "b",
+    "review": 4.9,
+    "reviewCount": 24,
+    "image": [
+      "Mocha Frappe.png",
+      null
+    ],
+    "description": "Experience the ultimate mocha indulgence with this rich and creamy frappe.",
+    "amountSold": 0
+  },
+  "Okinawa Delight Milk Tea": {
+    "sizeQuantity": {
+      "small": 15,
+      "large": 5,
+      "medium": 10
+    },
+    "sizePrice": {
+      "small": 10.0,
+      "large": 20.0,
+      "medium": 15.0
+    },
+    "name": "Okinawa Delight Milk Tea",
+    "type": "b",
+    "review": 4.2,
+    "reviewCount": 32,
+    "image": [
+      "Okinawa Milktea.png",
+      null
+    ],
+    "description": "Transport yourself to Okinawa with this delightful milk tea, boasting rich and aromatic flavors.",
+    "amountSold": 0
+  }
+}
