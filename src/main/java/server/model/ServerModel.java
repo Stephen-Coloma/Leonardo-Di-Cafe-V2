@@ -3,6 +3,7 @@ package server.model;
 import server.controller.ServerController;
 import shared.*;
 import shared.callback.Broadcast;
+import util.JSONUtility;
 import util.XMLUtility;
 
 import java.io.File;
@@ -10,6 +11,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**Server Model class holds the data that will eventually be accessed by all the clients.
  * The idea is, when a client places an order,it will update the menu of this server model (e.g. by decrementing it)
@@ -34,15 +36,6 @@ public class ServerModel {
         } catch (RemoteException remoteException) {
             remoteException.printStackTrace();
         }
-
-        /*
-        System.out.println("Notifying Controllers");
-        System.out.println(observers.size());
-        for (ClientObserver observer : observers) {
-            observer.onDataChanged();
-        }
-
-         */
     }
 
     public void registerServerController(ServerController controller) {
@@ -55,8 +48,13 @@ public class ServerModel {
 
     /**The constructor of the server model should load the predefined menu products*/
     public ServerModel() {
-        foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/resources/data/food_menu.xml"));
-        beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/resources/data/beverage_menu.xml"));
+        foodMenu = JSONUtility.loadFoodMenu("src/main/resources/data/food_menu.json");
+        beverageMenu = JSONUtility.loadBeverageMenu(new File("src/main/resources/data/beverage_menu.json"));
+//        customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/resources/data/customer_account_list.xml"));
+//        orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/resources/data/order_list.xml"));
+
+//        foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/resources/data/food_menu.xml"));
+//        beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/resources/data/beverage_menu.xml"));
         customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/resources/data/customer_account_list.xml"));
         orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/resources/data/order_list.xml"));
 

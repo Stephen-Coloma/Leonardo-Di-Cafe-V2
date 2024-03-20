@@ -31,6 +31,7 @@ public class MainMenuAdminView {
     private Button logoutButton;
 
     public void logout() {
+        //TODO: implementation of logging out of server saves the data in the json files
         System.exit(0);
     }
 
