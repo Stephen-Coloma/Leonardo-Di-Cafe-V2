@@ -6,6 +6,7 @@ module LeonardoDiCafe {
     requires java.logging;
     requires java.xml;
     requires java.rmi;
+    requires com.google.gson;
 
     opens client to javafx.fxml;
     opens server to javafx.fxml;
@@ -20,6 +21,7 @@ module LeonardoDiCafe {
     opens server.view.misc to javafx.fxml;
     opens server.view.analytics to javafx.fxml;
     opens client.controller.orderhistory to javafx.fxml;
+    opens shared to com.google.gson;
 
     exports client;
     exports server;

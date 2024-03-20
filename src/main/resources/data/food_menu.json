@@ -1,0 +1,520 @@
+{
+  "Chocolate Charm": {
+    "quantity": 19,
+    "price": 16.5,
+    "name": "Chocolate Charm",
+    "type": "f",
+    "review": 4.5,
+    "reviewCount": 19,
+    "image": [
+      "Chocolate Charm.png",
+      null
+    ],
+    "description": "Irresistible chocolate cake that charms the taste buds with every bite.",
+    "amountSold": 130
+  },
+  "Box of 6 Cupcakes": {
+    "quantity": 100,
+    "price": 18.0,
+    "name": "Box of 6 Cupcakes",
+    "type": "f",
+    "review": 4.6,
+    "reviewCount": 24,
+    "image": [
+      "Box Of 6 Cupcakes.jpg",
+      null
+    ],
+    "description": "Enjoy a variety of flavors with this box containing 6 delectable cupcakes.",
+    "amountSold": 100
+  },
+  "Chocolate Chip Cookie": {
+    "quantity": 15,
+    "price": 12.0,
+    "name": "Chocolate Chip Cookie",
+    "type": "f",
+    "review": 4.2,
+    "reviewCount": 17,
+    "image": [
+      "Chocolate Chip Cookie.png",
+      null
+    ],
+    "description": "A classic favorite, loaded with delicious chocolate chips.",
+    "amountSold": 100
+  },
+  "Vanilla Berry Bliss Cupcake": {
+    "quantity": 17,
+    "price": 13.0,
+    "name": "Vanilla Berry Bliss Cupcake",
+    "type": "f",
+    "review": 4.6,
+    "reviewCount": 23,
+    "image": [
+      "Vanilla Cupcake With Blueberry Toppings.png",
+      null
+    ],
+    "description": "Experience pure joy with this vanilla cupcake topped with fresh blueberries and strawberries.",
+    "amountSold": 110
+  },
+  "Blueberry Bliss Cookie": {
+    "quantity": 15,
+    "price": 12.0,
+    "name": "Blueberry Bliss Cookie",
+    "type": "f",
+    "review": 4.2,
+    "reviewCount": 22,
+    "image": [
+      "Blueberry Cookie.png",
+      null
+    ],
+    "description": "A delightful blend of blueberries and sweetness, baked to perfection.",
+    "amountSold": 85
+  },
+  "Honey Glazed Heaven Cookie": {
+    "quantity": 100,
+    "price": 13.0,
+    "name": "Honey Glazed Heaven Cookie",
+    "type": "f",
+    "review": 4.4,
+    "reviewCount": 18,
+    "image": [
+      "Honey Cookie.png",
+      null
+    ],
+    "description": "Sweetness meets perfection in this divine honey-glazed cookie.",
+    "amountSold": 16
+  },
+  "Chocolate Overload Cupcake": {
+    "quantity": 140,
+    "price": 14.0,
+    "name": "Chocolate Overload Cupcake",
+    "type": "f",
+    "review": 4.9,
+    "reviewCount": 30,
+    "image": [
+      "Chocolate Overload Cupcake.png",
+      null
+    ],
+    "description": "A chocolate lover\u0027s dream come true - an explosion of chocolate flavors in every bite.",
+    "amountSold": 19
+  },
+  "Sway Loaf": {
+    "quantity": 88,
+    "price": 12.5,
+    "name": "Sway Loaf",
+    "type": "f",
+    "review": 4.1,
+    "reviewCount": 11,
+    "image": [
+      "Sway Loaf.png",
+      null
+    ],
+    "description": "Soft and fluffy bread that\u0027ll make your taste buds sway with joy.",
+    "amountSold": 14
+  },
+  "Cheese Charm": {
+    "quantity": 90,
+    "price": 12.0,
+    "name": "Cheese Charm",
+    "type": "f",
+    "review": 4.2,
+    "reviewCount": 12,
+    "image": [
+      "Cheese Charm.png",
+      null
+    ],
+    "description": "Artisan bread with a delightful blend of assorted cheeses.",
+    "amountSold": 15
+  },
+  "Chocolicious Delight Cookie": {
+    "quantity": 110,
+    "price": 14.0,
+    "name": "Chocolicious Delight Cookie",
+    "type": "f",
+    "review": 4.7,
+    "reviewCount": 25,
+    "image": [
+      "Chocolate Cookie.png",
+      null
+    ],
+    "description": "A heavenly combination of rich chocolate, perfect for indulgence.",
+    "amountSold": 18
+  },
+  "Luna Loaf": {
+    "quantity": 105,
+    "price": 14.5,
+    "name": "Luna Loaf",
+    "type": "f",
+    "review": 4.7,
+    "reviewCount": 20,
+    "image": [
+      "Luna Loaf.png",
+      null
+    ],
+    "description": "A celestial blend of ingredients in this heavenly loaf of bread.",
+    "amountSold": 19
+  },
+  "Cookies and Cream Dream": {
+    "quantity": 95,
+    "price": 13.0,
+    "name": "Cookies and Cream Dream",
+    "type": "f",
+    "review": 4.6,
+    "reviewCount": 20,
+    "image": [
+      "Cookies And Cream Cookie.png",
+      null
+    ],
+    "description": "Creamy, crunchy, and utterly delicious - a dream come true for cookie lovers.",
+    "amountSold": 17
+  },
+  "Garlic Delight": {
+    "quantity": 100,
+    "price": 13.0,
+    "name": "Garlic Delight",
+    "type": "f",
+    "review": 4.5,
+    "reviewCount": 18,
+    "image": [
+      "Garlic Delight.png",
+      null
+    ],
+    "description": "Classic garlic-flavored bread, perfect for dipping or pairing with pasta.",
+    "amountSold": 16
+  },
+  "Cran Zest": {
+    "quantity": 80,
+    "price": 11.0,
+    "name": "Cran Zest",
+    "type": "f",
+    "review": 4.0,
+    "reviewCount": 10,
+    "image": [
+      "Cran Zest.png",
+      null
+    ],
+    "description": "Whole grain bread with cranberries for a tangy twist.",
+    "amountSold": 14
+  },
+  "Pistachio Pleasure Cupcake": {
+    "quantity": 70,
+    "price": 9.0,
+    "name": "Pistachio Pleasure Cupcake",
+    "type": "f",
+    "review": 4.1,
+    "reviewCount": 17,
+    "image": [
+      "Pistachio Cupcake.png",
+      null
+    ],
+    "description": "Delight your taste buds with the unique flavor of pistachio in this delightful cupcake.",
+    "amountSold": 13
+  },
+  "Cherry Delight": {
+    "quantity": 120,
+    "price": 18.0,
+    "name": "Cherry Delight",
+    "type": "f",
+    "review": 4.3,
+    "reviewCount": 17,
+    "image": [
+      "Cherry Delight.png",
+      null
+    ],
+    "description": "Light and fluffy cake filled with delicious cherry goodness.",
+    "amountSold": 20
+  },
+  "Strawberry Crown": {
+    "quantity": 110,
+    "price": 16.0,
+    "name": "Strawberry Crown",
+    "type": "f",
+    "review": 4.2,
+    "reviewCount": 14,
+    "image": [
+      "Strawberry Crown.png",
+      null
+    ],
+    "description": "Delicate cake crowned with fresh and juicy strawberries.",
+    "amountSold": 18
+  },
+  "Buttercream Dream Cupcake": {
+    "quantity": 90,
+    "price": 12.0,
+    "name": "Buttercream Dream Cupcake",
+    "type": "f",
+    "review": 4.5,
+    "reviewCount": 22,
+    "image": [
+      "Buttercream Cupcake.png",
+      null
+    ],
+    "description": "Indulge in the velvety smoothness of buttercream atop a moist cupcake base.",
+    "amountSold": 16
+  },
+  "Box of 12 Cupcakes": {
+    "quantity": 150,
+    "price": 30.0,
+    "name": "Box of 12 Cupcakes",
+    "type": "f",
+    "review": 4.8,
+    "reviewCount": 28,
+    "image": [
+      "Box Of 12 Cupcakes.jpg",
+      null
+    ],
+    "description": "Double the joy with this box containing 12 mouthwatering cupcakes in various flavors.",
+    "amountSold": 20
+  },
+  "Choco Chiffon": {
+    "quantity": 135,
+    "price": 17.5,
+    "name": "Choco Chiffon",
+    "type": "f",
+    "review": 4.7,
+    "reviewCount": 22,
+    "image": [
+      "Choco Chiffon.png",
+      null
+    ],
+    "description": "Airy and moist chocolate chiffon cake that melts in your mouth.",
+    "amountSold": 18
+  },
+  "Oatmeal Chip Crunch Cookie": {
+    "quantity": 90,
+    "price": 12.0,
+    "name": "Oatmeal Chip Crunch Cookie",
+    "type": "f",
+    "review": 4.3,
+    "reviewCount": 21,
+    "image": [
+      "Oatmeal Chip Cookie.png",
+      null
+    ],
+    "description": "A hearty blend of oats and chocolate chips, providing a satisfying crunch in every bite.",
+    "amountSold": 14
+  },
+  "Honey Hue": {
+    "quantity": 95,
+    "price": 12.5,
+    "name": "Honey Hue",
+    "type": "f",
+    "review": 4.3,
+    "reviewCount": 15,
+    "image": [
+      "Honey Hue.png",
+      null
+    ],
+    "description": "Golden-brown bread drizzled with honey for a sweet and savory experience.",
+    "amountSold": 17
+  },
+  "Mocha Marvel": {
+    "quantity": 125,
+    "price": 17.0,
+    "name": "Mocha Marvel",
+    "type": "f",
+    "review": 4.4,
+    "reviewCount": 16,
+    "image": [
+      "Mocha Marvel.png",
+      null
+    ],
+    "description": "Marvelously delicious cake blending the flavors of chocolate and coffee.",
+    "amountSold": 17
+  },
+  "Box of 12 Cookies": {
+    "quantity": 120,
+    "price": 15.0,
+    "name": "Box of 12 Cookies",
+    "type": "f",
+    "review": 4.5,
+    "reviewCount": 18,
+    "image": [
+      "Box Of 12 Cookies.jpg",
+      null
+    ],
+    "description": "A delightful assortment of 12 freshly baked cookies.",
+    "amountSold": 20
+  },
+  "Oreo Overload": {
+    "quantity": 160,
+    "price": 21.0,
+    "name": "Oreo Overload",
+    "type": "f",
+    "review": 4.9,
+    "reviewCount": 28,
+    "image": [
+      "Oreo Overload.png",
+      null
+    ],
+    "description": "Indulgent cake loaded with layers of Oreo goodness.",
+    "amountSold": 23
+  },
+  "Plain and Simple Cookie": {
+    "quantity": 80,
+    "price": 10.0,
+    "name": "Plain and Simple Cookie",
+    "type": "f",
+    "review": 4.0,
+    "reviewCount": 15,
+    "image": [
+      "Plain Cookie.png",
+      null
+    ],
+    "description": "Sometimes, simplicity is key. Enjoy the classic flavor of a plain cookie done just right.",
+    "amountSold": 13
+  },
+  "Red Velvet Temptation Cookie": {
+    "quantity": 120,
+    "price": 15.0,
+    "name": "Red Velvet Temptation Cookie",
+    "type": "f",
+    "review": 4.8,
+    "reviewCount": 27,
+    "image": [
+      "Red Velvet Cookie.png",
+      null
+    ],
+    "description": "Indulge in the decadent allure of red velvet, crafted into a delightful cookie.",
+    "amountSold": 19
+  },
+  "Chocolate Strawberry Sensation Cupcake": {
+    "quantity": 120,
+    "price": 15.0,
+    "name": "Chocolate Strawberry Sensation Cupcake",
+    "type": "f",
+    "review": 4.7,
+    "reviewCount": 26,
+    "image": [
+      "Chocolate Cupcake With Strawberry Frosting.png",
+      null
+    ],
+    "description": "A heavenly combination of rich chocolate cupcake, luscious strawberry frosting, and fresh strawberry topping.",
+    "amountSold": 20
+  },
+  "Caramel Strawberry Temptation Cupcake": {
+    "quantity": 80,
+    "price": 11.0,
+    "name": "Caramel Strawberry Temptation Cupcake",
+    "type": "f",
+    "review": 4.4,
+    "reviewCount": 19,
+    "image": [
+      "Caramel Cupcake With Strawberry Topping.png",
+      null
+    ],
+    "description": "Experience bliss with caramel-frosted cupcake topped with succulent strawberries.",
+    "amountSold": 14
+  },
+  "Chocolate Bread": {
+    "quantity": 110,
+    "price": 14.0,
+    "name": "Chocolate Bread",
+    "type": "f",
+    "review": 4.8,
+    "reviewCount": 25,
+    "image": [
+      "Chocolate Bread.png",
+      null
+    ],
+    "description": "Rich chocolate-infused bread with a hint of sweetness.",
+    "amountSold": 18
+  },
+  "Latte Lush": {
+    "quantity": 140,
+    "price": 18.5,
+    "name": "Latte Lush",
+    "type": "f",
+    "review": 4.6,
+    "reviewCount": 21,
+    "image": [
+      "Latte Lush.png",
+      null
+    ],
+    "description": "Coffee-infused cake with a lush and creamy texture.",
+    "amountSold": 20
+  },
+  "Nut Nudge": {
+    "quantity": 92,
+    "price": 13.5,
+    "name": "Nut Nudge",
+    "type": "f",
+    "review": 4.6,
+    "reviewCount": 16,
+    "image": [
+      "Nut Nudge.png",
+      null
+    ],
+    "description": "Bread featuring a generous amount of assorted nuts for a delightful crunch.",
+    "amountSold": 16
+  },
+  "Dark Delight": {
+    "quantity": 145,
+    "price": 19.0,
+    "name": "Dark Delight",
+    "type": "f",
+    "review": 4.8,
+    "reviewCount": 25,
+    "image": [
+      "Dark Delight.png",
+      null
+    ],
+    "description": "Intensely rich and dark chocolate cake for the ultimate chocolate lover.",
+    "amountSold": 21
+  },
+  "Caramel Cascade": {
+    "quantity": 150,
+    "price": 20.0,
+    "name": "Caramel Cascade",
+    "type": "f",
+    "review": 4.9,
+    "reviewCount": 30,
+    "image": [
+      "Caramel Cascade.png",
+      null
+    ],
+    "description": "Decadent caramel-flavored cake with a cascading drizzle.",
+    "amountSold": 22
+  },
+  "Box of 3 Cupcakes": {
+    "quantity": 50,
+    "price": 8.0,
+    "name": "Box of 3 Cupcakes",
+    "type": "f",
+    "review": 4.2,
+    "reviewCount": 18,
+    "image": [
+      "Box Of Three Cupcakes.jpg",
+      null
+    ],
+    "description": "A small treat to satisfy your cravings, this box contains 3 delicious cupcakes.",
+    "amountSold": 12
+  },
+  "Multigrain Marvel": {
+    "quantity": 85,
+    "price": 11.5,
+    "name": "Multigrain Marvel",
+    "type": "f",
+    "review": 4.4,
+    "reviewCount": 14,
+    "image": [
+      "Multigrain Marvel.png",
+      null
+    ],
+    "description": "A nutritious mix of grains, seeds, and nuts in every slice.",
+    "amountSold": 13
+  },
+  "Banana Bliss Cupcake": {
+    "quantity": 75,
+    "price": 10.0,
+    "name": "Banana Bliss Cupcake",
+    "type": "f",
+    "review": 4.3,
+    "reviewCount": 20,
+    "image": [
+      "Banana Cupcake.png",
+      null
+    ],
+    "description": "A delightful banana-flavored cupcake that melts in your mouth.",
+    "amountSold": 15
+  }
+}
