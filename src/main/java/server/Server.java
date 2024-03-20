@@ -7,6 +7,7 @@ import server.controller.ServerController;
 import server.model.ServerModel;
 import server.model.listeners.ClientObserver;
 import server.view.ServerView;
+import util.JSONUtility;
 import util.XMLUtility;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class Server extends Application implements ClientObserver {
             XMLUtility.saveFoodMenu(model.getFoodMenu());
             XMLUtility.saveBeverageMenu(model.getBeverageMenu());
             XMLUtility.saveOrders(model.getOrderList());
-            XMLUtility.saveCustomerAccounts(model.getCustomerAccountList());
+            JSONUtility.saveCustomerAccounts(model.getCustomerAccountList());
         });
 
         // launch the server

@@ -3,19 +3,22 @@ package util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import shared.Beverage;
-import shared.Food;
+import shared.*;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JSONUtility {
     private static final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
-
+    private static Gson customerLoaderAndSaver = new GsonBuilder().setPrettyPrinting()
+            .registerTypeAdapter(Customer.class, new CustomerTypeAdapter())
+            .registerTypeAdapter(Order.class, new OrderTypeAdapter())
+            .create();
     public static Map<String, Food> loadFoodMenu(String filePath) {
         try (FileReader reader = new FileReader(filePath)) {
             Type type = new TypeToken<HashMap<String, Food>>() {}.getType();
@@ -84,4 +87,27 @@ public class JSONUtility {
         }
         System.out.println("Beverage menu saved successfully!");
     }// end of saveBeverageMenu
+    public static List<Customer> loadCustomerAccounts(String filePath) {
+
+        List<Customer> customerList;
+        try (FileReader fileReader = new FileReader(filePath)) {
+            Type customerType = new TypeToken<List<Customer>>() {}.getType();
+            customerList = customerLoaderAndSaver.fromJson(fileReader, customerType);
+            System.out.println(customerList);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return customerList;
+
+    }
+    public static void saveCustomerAccounts(List<Customer> customerAccountList) {
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/data/customer_account_list.json")){
+            customerLoaderAndSaver.toJson(customerAccountList,fileWriter);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

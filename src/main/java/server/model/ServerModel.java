@@ -3,6 +3,7 @@ package server.model;
 import server.controller.ServerController;
 import server.model.listeners.ClientObserver;
 import shared.*;
+import util.JSONUtility;
 import util.XMLUtility;
 import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
@@ -53,7 +54,7 @@ public class ServerModel {
     public ServerModel() {
         foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/resources/data/food_menu.xml"));
         beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/resources/data/beverage_menu.xml"));
-        customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/resources/data/customer_account_list.xml"));
+        customerAccountList = JSONUtility.loadCustomerAccounts("src/main/resources/data/customer_account_list.json");
         orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/resources/data/order_list.xml"));
 
         //set up
