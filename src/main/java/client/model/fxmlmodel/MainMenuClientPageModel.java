@@ -22,9 +22,6 @@ public class MainMenuClientPageModel {
     private Registry registry;
     private OrderManagement orderManagement;
     private CallbackManagement callbackManagement;
-//    private Socket socket;
-//    private ObjectOutputStream out;
-//    private ObjectInputStream in;
 
     public MainMenuClientPageModel(Object[] clientModelData, Registry registry) throws NotBoundException, RemoteException {
         //the serverResponse[2] responds Object[] {customer, foodMenu, beverageMenu}
@@ -61,29 +58,6 @@ public class MainMenuClientPageModel {
     public ClientModel getClientModel() {
         return clientModel;
     }
-
-
-
-//    public void setSocket(Socket socket) {
-//        this.socket = socket;
-//    }
-//
-//    public ObjectOutputStream getOut() {
-//        return out;
-//    }
-//
-//    public void setOut(ObjectOutputStream out) {
-//        this.out = out;
-//    }
-//
-//    public ObjectInputStream getIn() {
-//        return in;
-//    }
-//
-//    public void setIn(ObjectInputStream in) {
-//        this.in = in;
-//    }
-
 
     public Registry getRegistry() {
         return registry;

@@ -85,7 +85,7 @@ public class LoginPageController {
                 e.printStackTrace();
             }
         });
-    }
+    }// end of LoginPageController
 
     /**This method parses the response from the server. If Login in successful, load the main menu client page*/
     private void loadMainMenu(Object[] serverResponse, ActionEvent event) throws IOException, NotBoundException {
@@ -99,49 +99,8 @@ public class LoginPageController {
         //when loading the main menu, pass the clientModel received from the server
         mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel(serverResponse, loginModel.getRegistry()), loader.getController());
         mainMenu.setPrimaryStage(stage);
-//        Thread thread = new Thread(() -> mainMenu.run());
-//        thread.setDaemon(true);
-//        thread.start();
 
         stage.setScene(scene);
         stage.show();
-
-//        //server response Guide Object[]{clientID, message, Object[] clientModelData}
-//        //load login UI if successful
-//        try {
-//            if (serverResponse[1].equals("LOGIN_SUCCESSFUL")){
-//                loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
-//                root = loader.load();
-//
-//                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//                Scene scene = new Scene(root);
-//
-//                //when loading the main menu, pass the clientModel received from the server
-//                mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel((Object[]) serverResponse[2]), loader.getController());
-////                mainMenu.setSocket(this.loginModel.getSocket());
-////                mainMenu.setIn(this.loginModel.getIn());
-////                mainMenu.setOut(this.loginModel.getOut());
-//                mainMenu.setPrimaryStage(stage);
-//                Thread thread = new Thread(() -> mainMenu.run());
-//                thread.setDaemon(true);
-//                thread.start();
-//
-//                stage.setScene(scene);
-//                stage.show();
-//
-//            } else if (serverResponse[1].equals("ALREADY_LOGGED_IN")){
-//                this.loginView.getNoticeLabel().setText("account already logged in");
-//                this.loginView.getNoticeLabel().setVisible(true);
-//                this.loginView.getUsernameTextField().clear();
-//                this.loginView.getPasswordField().clear();
-//            } else {
-//                this.loginView.getNoticeLabel().setText("wrong credentials");
-//                this.loginView.getNoticeLabel().setVisible(true);
-//                this.loginView.getUsernameTextField().clear();
-//                this.loginView.getPasswordField().clear();
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-    }
+    } // end of loadMainMenu
 } // end of LoginPageController class

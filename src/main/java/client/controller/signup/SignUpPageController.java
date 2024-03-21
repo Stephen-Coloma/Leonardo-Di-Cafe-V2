@@ -96,27 +96,5 @@ public class SignUpPageController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
-//        //load login UI if successful
-//        try {
-//            if (serverResponse[1].equals("SIGN_UP_SUCCESSFUL")){
-//                loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
-//                root = loader.load();
-//
-//                new LoginPageController(loader.getController(), new LoginPageModel());
-//
-//                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//                Scene scene = new Scene(root);
-//                stage.setScene(scene);
-//                stage.show();
-//            } else {
-//                this.signUpView.getNoticeLabel().setText("account exists");
-//                this.signUpView.getNoticeLabel().setVisible(true);
-//                this.signUpView.getUserNameTextField().clear();
-//                this.signUpView.getUserNameTextField().setPromptText("try another one");
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 } // end of SignUpPageController class

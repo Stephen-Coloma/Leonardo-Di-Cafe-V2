@@ -14,9 +14,6 @@ public class SignUpPageModel {
     private String address;
     private String email;
     private String password;
-//    private Socket socket;
-//    private ObjectOutputStream out;
-//    private ObjectInputStream in;
     private boolean serverResponse;
     private Registry registry;
 
@@ -32,31 +29,7 @@ public class SignUpPageModel {
         Customer signingUpCustomer= new Customer(fullName, username, address, email, password);
         Authentication authentication = (Authentication) registry.lookup("authentication");
         serverResponse = authentication.signUp(signingUpCustomer);
-
-//        //Guide Object[] {"clientID", "SIGN_UP", customer}
-//        Customer signingUpCustomer= new Customer(fullName, username, address, email, password);
-//        String clientID = String.valueOf(username.hashCode());
-//        String requestType = "SIGN_UP";
-//
-//        socket = new Socket(Client.IP_ADDRESS, Client.PORT);
-//        out = new ObjectOutputStream(socket.getOutputStream());
-//        in  = new ObjectInputStream(socket.getInputStream());
-//
-//        sendData(clientID, requestType, signingUpCustomer);
-//        Object[] response = (Object[]) in.readObject();
-//
-//        in.close();
-//        out.close();
-//        socket.close();
-
-//        serverResponse = response;
     }
-
-    /**Helper method that sends data to server*/
-//    private void sendData(String clientID, String requestType, Object data) throws IOException{
-//        Object[] request = new Object[]{clientID, requestType, data};
-//        out.writeObject(request);
-//    }
 
     public String getUsername() {
         return username;
@@ -81,22 +54,6 @@ public class SignUpPageModel {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    public ObjectOutputStream getOut() {
-//        return out;
-//    }
-//
-//    public void setOut(ObjectOutputStream out) {
-//        this.out = out;
-//    }
-//
-//    public ObjectInputStream getIn() {
-//        return in;
-//    }
-//
-//    public void setIn(ObjectInputStream in) {
-//        this.in = in;
-//    }
 
     public boolean getServerResponse() {
         return serverResponse;
