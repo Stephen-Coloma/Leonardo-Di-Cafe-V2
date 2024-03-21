@@ -29,6 +29,24 @@ public class Beverage extends Product{
         this.sizeQuantity = sizeQuantity;
     }
 
+    //constructor
+    public Beverage(String name, char type, double review, int reviewCount, Object[] image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice, int amountSold) {
+        super(name, type, review, reviewCount, image, description,amountSold);
+
+        HashMap<String, Integer> sizeQuantity = new HashMap<>(3);
+        sizeQuantity.put("small", sQuantity);
+        sizeQuantity.put("medium", mQuantity);
+        sizeQuantity.put("large", lQuantity);
+
+        HashMap<String, Double> sizePrice = new HashMap<>(3);
+        sizePrice.put("small", sPrice);
+        sizePrice.put("medium", mPrice);
+        sizePrice.put("large", lPrice);
+
+        this.sizePrice = sizePrice;
+        this.sizeQuantity = sizeQuantity;
+    }
+
     /**This constructor will only be used for client side rating function*/
     public Beverage(String name, char type, double review){
         super(name, type, review, 0, null, null);

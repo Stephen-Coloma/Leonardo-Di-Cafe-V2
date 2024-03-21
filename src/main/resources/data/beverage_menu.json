@@ -6,85 +6,261 @@
       "medium": 10
     },
     "sizePrice": {
-      "small": 10.0,
-      "large": 20.0,
-      "medium": 15.0
+      "small": 4.0,
+      "large": 6.0,
+      "medium": 5.0
     },
-    "name": "Matcha Frosted Iced Latte",
+    "name": "Midnight Mocha Iced Coffee",
     "type": "b",
-    "review": 4.5,
-    "reviewCount": 23,
+    "review": 4.2,
+    "reviewCount": 20,
     "image": [
       "Black Iced Coffee.png",
       null
     ],
     "description": "A refreshing blend of rich coffee with a hint of chocolate, perfect for any time of the day.",
-    "amountSold": 0
+    "amountSold": 75
   },
   "Matcha Frosted Iced Latte": {
     "sizeQuantity": {
-      "small": 15,
-      "large": 5,
-      "medium": 10
+      "small": 16,
+      "large": 7,
+      "medium": 11
     },
     "sizePrice": {
-      "small": 10.0,
-      "large": 20.0,
-      "medium": 15.0
+      "small": 5.0,
+      "large": 7.0,
+      "medium": 6.0
     },
     "name": "Matcha Frosted Iced Latte",
     "type": "b",
-    "review": 4.4,
-    "reviewCount": 12,
+    "review": 4.3,
+    "reviewCount": 21,
     "image": [
-      "Black Iced Coffee.png",
+      "Iced Matcha Latte.png",
       null
     ],
     "description": "A refreshing combination of matcha and frosted milk, served over ice for a delightful treat.",
-    "amountSold": 0
+    "amountSold": 100
   },
   "Mocha Madness Frappe": {
     "sizeQuantity": {
-      "small": 15,
-      "large": 5,
-      "medium": 10
+      "small": 19,
+      "large": 8,
+      "medium": 13
     },
     "sizePrice": {
-      "small": 10.0,
-      "large": 20.0,
-      "medium": 15.0
+      "small": 6.0,
+      "large": 8.0,
+      "medium": 7.0
     },
     "name": "Mocha Madness Frappe",
     "type": "b",
     "review": 4.9,
-    "reviewCount": 24,
+    "reviewCount": 30,
     "image": [
       "Mocha Frappe.png",
       null
     ],
     "description": "Experience the ultimate mocha indulgence with this rich and creamy frappe.",
-    "amountSold": 0
+    "amountSold": 140
   },
   "Okinawa Delight Milk Tea": {
     "sizeQuantity": {
-      "small": 15,
+      "small": 13,
       "large": 5,
-      "medium": 10
+      "medium": 9
     },
     "sizePrice": {
-      "small": 10.0,
-      "large": 20.0,
-      "medium": 15.0
+      "small": 4.0,
+      "large": 6.0,
+      "medium": 5.0
     },
     "name": "Okinawa Delight Milk Tea",
     "type": "b",
-    "review": 4.2,
-    "reviewCount": 32,
+    "review": 4.1,
+    "reviewCount": 17,
     "image": [
       "Okinawa Milktea.png",
       null
     ],
     "description": "Transport yourself to Okinawa with this delightful milk tea, boasting rich and aromatic flavors.",
-    "amountSold": 0
+    "amountSold": 70
+  },
+  "Chilled Brewed Latte": {
+    "sizeQuantity": {
+      "small": 17,
+      "large": 8,
+      "medium": 12
+    },
+    "sizePrice": {
+      "small": 4.0,
+      "large": 6.0,
+      "medium": 5.0
+    },
+    "name": "Chilled Brewed Latte",
+    "type": "b",
+    "review": 4.6,
+    "reviewCount": 23,
+    "image": [
+      "Cold Brew Iced Latte.png",
+      null
+    ],
+    "description": "A smooth and creamy latte served over ice, a perfect pick-me-up for any occasion.",
+    "amountSold": 110
+  },
+  "Brown Sugar Bliss Iced Coffee": {
+    "sizeQuantity": {
+      "small": 17,
+      "large": 8,
+      "medium": 12
+    },
+    "sizePrice": {
+      "small": 5.0,
+      "large": 7.0,
+      "medium": 6.0
+    },
+    "name": "Brown Sugar Bliss Iced Coffee",
+    "type": "b",
+    "review": 4.5,
+    "reviewCount": 22,
+    "image": [
+      "Brown Sugar Iced Coffee.png",
+      null
+    ],
+    "description": "Indulge in the sweetness of brown sugar infused into a chilled coffee concoction.",
+    "amountSold": 90
+  },
+  "Iced Sweet Tea": {
+    "sizeQuantity": {
+      "small": 13,
+      "large": 5,
+      "medium": 9
+    },
+    "sizePrice": {
+      "small": 3.0,
+      "large": 5.0,
+      "medium": 4.0
+    },
+    "name": "Iced Sweet Tea",
+    "type": "b",
+    "review": 4.0,
+    "reviewCount": 15,
+    "image": [
+      "Iced Tea.png",
+      null
+    ],
+    "description": "Cool off with this refreshing iced tea, perfectly sweetened to quench your thirst.",
+    "amountSold": 80
+  },
+  "Choco Chip Delight Frappe": {
+    "sizeQuantity": {
+      "small": 14,
+      "large": 9,
+      "medium": 10
+    },
+    "sizePrice": {
+      "small": 5.0,
+      "large": 7.0,
+      "medium": 6.0
+    },
+    "name": "Choco Chip Delight Frappe",
+    "type": "b",
+    "review": 4.4,
+    "reviewCount": 19,
+    "image": [
+      "Chocolate Chip Frappe.png",
+      null
+    ],
+    "description": "Indulge your senses with this delightful blend of chocolate and coffee, topped with chocolate chips.",
+    "amountSold": 80
+  },
+  "Oreo Cheesecake Milk Tea": {
+    "sizeQuantity": {
+      "small": 20,
+      "large": 10,
+      "medium": 15
+    },
+    "sizePrice": {
+      "small": 6.0,
+      "large": 8.0,
+      "medium": 7.0
+    },
+    "name": "Oreo Cheesecake Milk Tea",
+    "type": "b",
+    "review": 4.8,
+    "reviewCount": 28,
+    "image": [
+      "Cream Cheese Oreo Milktea.png",
+      null
+    ],
+    "description": "Indulge in the creamy goodness of cream cheese blended with Oreo cookies in this heavenly milk tea.",
+    "amountSold": 150
+  },
+  "Vanilla Berry Burst Milk Tea": {
+    "sizeQuantity": {
+      "small": 17,
+      "large": 8,
+      "medium": 12
+    },
+    "sizePrice": {
+      "small": 5.0,
+      "large": 7.0,
+      "medium": 6.0
+    },
+    "name": "Vanilla Berry Burst Milk Tea",
+    "type": "b",
+    "review": 4.6,
+    "reviewCount": 23,
+    "image": [
+      "Vanilla Milktea.png",
+      null
+    ],
+    "description": "Indulge in the sweetness of vanilla milk tea topped with fresh blueberries and strawberries.",
+    "amountSold": 110
+  },
+  "Wintermelon Wonderland Milk Tea": {
+    "sizeQuantity": {
+      "small": 14,
+      "large": 6,
+      "medium": 10
+    },
+    "sizePrice": {
+      "small": 4.0,
+      "large": 6.0,
+      "medium": 5.0
+    },
+    "name": "Wintermelon Wonderland Milk Tea",
+    "type": "b",
+    "review": 4.4,
+    "reviewCount": 19,
+    "image": [
+      "Wintermelon Milktea.png",
+      null
+    ],
+    "description": "Escape to a wonderland of flavor with this refreshing wintermelon milk tea.",
+    "amountSold": 80
+  },
+  "Caramel Creamy Frappe": {
+    "sizeQuantity": {
+      "small": 20,
+      "large": 10,
+      "medium": 15
+    },
+    "sizePrice": {
+      "small": 6.0,
+      "large": 8.0,
+      "medium": 7.0
+    },
+    "name": "Caramel Creamy Frappe",
+    "type": "b",
+    "review": 4.7,
+    "reviewCount": 26,
+    "image": [
+      "Caramel Frappe.png",
+      null
+    ],
+    "description": "Experience pure bliss with this creamy caramel frappe, a delightful treat on a hot day.",
+    "amountSold": 120
   }
 }
