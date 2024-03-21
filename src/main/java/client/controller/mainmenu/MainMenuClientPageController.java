@@ -84,7 +84,8 @@ public class MainMenuClientPageController {
         this.mainMenuView.getAccountNameLabel().setText(accountName);
 
         // initial menu
-        loadFoodMenu();
+//        loadFoodMenu();
+        loadAllMenu();
 
         setComponentActions();
 
@@ -113,6 +114,12 @@ public class MainMenuClientPageController {
             mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
             currentLoadedMenu = 'b';
             loadBeverageMenu();
+        });
+
+        mainMenuView.getMainMenuAllButton().setOnAction(actionEvent -> {
+            mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
+//            currentLoadedMenu = 'b';
+            loadAllMenu();
         });
 
         //setting up the action for setUpActionClearCartButtonButton
@@ -199,6 +206,61 @@ public class MainMenuClientPageController {
         String formattedDate = currentDate.format(formatter);
         mainMenuView.setDateLabel(formattedDate);
     } // end of setupDate
+
+    private void loadAllMenu(){
+        mainMenuView.getProductTypeLabel().setText("All Products");
+
+        LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+
+        HashMap<String, Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu();
+        List<Food> foodProducts = new ArrayList<>(foodMenu.values());
+
+        HashMap<String, Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu();
+        List<Beverage> beverageProducts = new ArrayList<>(beverageMenu.values());
+
+        Task<Void> loadingTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                Thread.sleep(2000);
+
+                Platform.runLater(() -> {
+                    int columnIndex = 0;
+                    int rowIndex = 1;
+
+                    for (Food food : foodProducts) {
+                        Node productCard = createProductCard(food);
+
+                        mainMenuView.getFlowPane().getChildren().add(productCard);
+                        if (columnIndex == 1) {
+                            columnIndex = 0;
+                            rowIndex++;
+                        } else {
+                            columnIndex++;
+                        }
+                    }
+
+                    for (Beverage beverage : beverageProducts) {
+                        Node productCard = createProductCard(beverage);
+
+                        mainMenuView.getFlowPane().getChildren().add(productCard);
+
+                        if (columnIndex == 1) {
+                            columnIndex = 0;
+                            rowIndex++;
+                        } else {
+                            columnIndex++;
+                        }
+                    }
+
+                    LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+                });
+                return null;
+            }
+        };
+        Thread loadingThread = new Thread(loadingTask);
+        loadingThread.start();
+    }
+
 
     private void loadFoodMenu() {
         mainMenuView.getProductTypeLabel().setText("Food Category");
