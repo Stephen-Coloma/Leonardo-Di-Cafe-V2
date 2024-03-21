@@ -58,7 +58,8 @@ public class MainMenuClientPageView {
     private FlowPane flowPane;
     @FXML
     private ScrollPane scrollPaneMenu;
-
+    @FXML
+    private Button mainMenuAllButton;
     @FXML
     private Button mainMenuBeveragesButton;
 
@@ -192,6 +193,8 @@ public class MainMenuClientPageView {
     public FlowPane getFlowPane() {
         return flowPane;
     }
+
+    public Button getMainMenuAllButton(){return  mainMenuAllButton;}
 
     public Button getMainMenuBeveragesButton() {
         return mainMenuBeveragesButton;
