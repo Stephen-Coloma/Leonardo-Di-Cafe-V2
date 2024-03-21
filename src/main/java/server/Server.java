@@ -47,7 +47,7 @@ public class Server extends Application {
         view.getStage().setOnCloseRequest(windowEvent -> {
             JSONUtility.saveFoodMenu(model.getFoodMenu());
             JSONUtility.saveBeverageMenu(model.getBeverageMenu());
-            XMLUtility.saveOrders(model.getOrderList());
+            JSONUtility.saveOrderList(model.getOrderList());
             XMLUtility.saveCustomerAccounts(model.getCustomerAccountList());
         });
 

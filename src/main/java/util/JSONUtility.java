@@ -14,7 +14,6 @@ import java.util.List;
 
 public class JSONUtility {
     private static final Gson gson = new GsonBuilder()
-//            .registerTypeAdapter(Product.class, new ProductDeserializer);
             .setPrettyPrinting()
             .create();
 
@@ -119,7 +118,19 @@ public class JSONUtility {
         System.out.println("Beverage menu saved successfully!");
     }// end of saveBeverageMenu
 
-    public static List<Order> LoadOrderList(File filepath) {
+
+    /**
+     * Loads a List of Order from Json file
+     * @param filepath the File object representing the path to the JSON file containing the beverage menu
+     * @return List of Orders
+     */
+    public static List<Order> loadOrderList(File filepath) {
+
+        Gson gson1 = new GsonBuilder()
+                .registerTypeAdapter(Product.class, new ProductDeserializer())
+                .setPrettyPrinting()
+                .create();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
             StringBuilder builder = new StringBuilder();
             String line;
@@ -130,48 +141,55 @@ public class JSONUtility {
 
             Type type = new TypeToken<List<Order>>() {
             }.getType();
-            return gson.fromJson(builder.toString(), type);
+            return gson1.fromJson(builder.toString(), type);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static void saveOrderList(List<Order> orderList, File filePath) {
-        try (FileWriter writer = new FileWriter(filePath)) {
+    /**
+     * saves a List of Orders to Json file
+     *
+     * @param orderList creates an empty list of Order Objects
+     */
+    public static void saveOrderList(List<Order> orderList) {
+        File file = new File("src/main/resources/data/order_list.json");
+
+        try (FileWriter writer = new FileWriter(file)) {
             gson.toJson(orderList, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-//
-//    /**
-//     * Helper class to assist Gson with deserialization of abstract classes.
-//     * Since Gson cannot directly instantiate an abstract class, this method is used in the deserialization process
-//     */
-//    public static class ProductDeserializer implements JsonDeserializer<Product> {
-//        public Product deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-//            JsonObject jsonObject = json.getAsJsonObject();
-//
-//            // Check the 'type' field in JSON to determine the concrete subclass to instantiate
-//            JsonElement productTypeElement = jsonObject.get("type");
-//            if (productTypeElement != null && productTypeElement.isJsonPrimitive()) {
-//                String productType = productTypeElement.getAsString();
-//                switch (productType) {
-//                    case "f":
-//                        return context.deserialize(jsonObject, Food.class);
-//                    case "b":
-//                        return context.deserialize(jsonObject, Beverage.class);
-//                    // Add more cases for other concrete subclasses if needed
-//                    default:
-//                        throw new JsonParseException("Unknown product type: " + productType);
-//                }
-//            } else {
-//                throw new JsonParseException("'type' field is missing or not a valid JSON primitive");
-//            }
-//        }
-//    }
+
+    /**
+     * Helper class to assist Gson with deserialization of abstract classes.
+     * Since Gson cannot directly instantiate an abstract class, this method is used in the deserialization process
+     */
+    public static class ProductDeserializer implements JsonDeserializer<Product> {
+        public Product deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+
+            // Check the 'type' field in JSON to determine the concrete subclass to instantiate
+            JsonElement productTypeElement = jsonObject.get("type");
+            if (productTypeElement != null && productTypeElement.isJsonPrimitive()) {
+                String productType = productTypeElement.getAsString();
+                switch (productType) {
+                    case "f":
+                        return context.deserialize(jsonObject, Food.class);
+                    case "b":
+                        return context.deserialize(jsonObject, Beverage.class);
+                    // Add more cases for other concrete subclasses if needed
+                    default:
+                        throw new JsonParseException("Unknown product type: " + productType);
+                }
+            } else {
+                throw new JsonParseException("'type' field is missing or not a valid JSON primitive");
+            }
+        }
+    }
 
 
 }
