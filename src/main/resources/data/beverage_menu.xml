@@ -6,11 +6,11 @@
         <reviewCount>20</reviewCount>
         <image>Black Iced Coffee.png</image>
         <description>A refreshing blend of rich coffee with a hint of chocolate, perfect for any time of the day.</description>
-        <amountSold>75</amountSold>
+        <amountSold>76</amountSold>
         <quantities>
             <quantity size="small">15</quantity>
             <quantity size="large">5</quantity>
-            <quantity size="medium">10</quantity>
+            <quantity size="medium">9</quantity>
         </quantities>
         <prices>
             <price size="small">4.0</price>
@@ -44,9 +44,9 @@
         <reviewCount>30</reviewCount>
         <image>Mocha Frappe.png</image>
         <description>Experience the ultimate mocha indulgence with this rich and creamy frappe.</description>
-        <amountSold>140</amountSold>
+        <amountSold>141</amountSold>
         <quantities>
-            <quantity size="small">19</quantity>
+            <quantity size="small">18</quantity>
             <quantity size="large">8</quantity>
             <quantity size="medium">13</quantity>
         </quantities>
@@ -63,9 +63,9 @@
         <reviewCount>17</reviewCount>
         <image>Okinawa Milktea.png</image>
         <description>Transport yourself to Okinawa with this delightful milk tea, boasting rich and aromatic flavors.</description>
-        <amountSold>70</amountSold>
+        <amountSold>71</amountSold>
         <quantities>
-            <quantity size="small">13</quantity>
+            <quantity size="small">12</quantity>
             <quantity size="large">5</quantity>
             <quantity size="medium">9</quantity>
         </quantities>

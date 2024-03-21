@@ -238,14 +238,7 @@
    <center>
       <ScrollPane fx:id="scrollPaneMenu" focusTraversable="false" prefHeight="665.0" prefWidth="720.0" BorderPane.alignment="CENTER">
          <content>
-            <GridPane fx:id="gridPaneMenu" prefHeight="0.0" prefWidth="740.0">
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </GridPane>
+            <FlowPane fx:id="flowPane" prefHeight="0.0" prefWidth="744.0" />
          </content></ScrollPane>
    </center>
 </BorderPane>

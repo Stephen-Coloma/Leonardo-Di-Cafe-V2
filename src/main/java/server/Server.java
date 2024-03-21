@@ -48,7 +48,7 @@ public class Server extends Application {
             JSONUtility.saveFoodMenu(model.getFoodMenu());
             JSONUtility.saveBeverageMenu(model.getBeverageMenu());
             JSONUtility.saveOrderList(model.getOrderList());
-            XMLUtility.saveCustomerAccounts(model.getCustomerAccountList());
+            JSONUtility.saveCustomerAccounts(model.getCustomerAccountList());
         });
 
         // launch the server

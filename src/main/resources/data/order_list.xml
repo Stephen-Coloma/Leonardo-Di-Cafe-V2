@@ -53,4 +53,75 @@
         <totalPrice>170.0</totalPrice>
         <status>false</status>
     </order>
+    <order>
+        <customer>
+            <name>Sample</name>
+            <username>Sample</username>
+            <address>Sample</address>
+        </customer>
+        <product>
+            <name>Chocolate Charm</name>
+            <type>f</type>
+            <review>4.5</review>
+            <image>Chocolate Charm.png</image>
+            <quantity>1</quantity>
+        </product>
+        <product>
+            <name>Box of 6 Cupcakes</name>
+            <type>f</type>
+            <review>4.6</review>
+            <image>Box Of 6 Cupcakes.jpg</image>
+            <quantity>1</quantity>
+        </product>
+        <orderID>1</orderID>
+        <timeStamp>2024-03-20</timeStamp>
+        <totalPrice>34.5</totalPrice>
+        <status>false</status>
+    </order>
+    <order>
+        <customer>
+            <name>Sample</name>
+            <username>Sample</username>
+            <address>Sample</address>
+        </customer>
+        <product>
+            <name>Midnight Mocha Iced Coffee</name>
+            <type>b</type>
+            <review>4.2</review>
+            <image>Black Iced Coffee.png</image>
+            <size>medium</size>
+            <quantity>1</quantity>
+        </product>
+        <product>
+            <name>Okinawa Delight Milk Tea</name>
+            <type>b</type>
+            <review>4.1</review>
+            <image>Okinawa Milktea.png</image>
+            <size>small</size>
+            <quantity>1</quantity>
+        </product>
+        <orderID>1</orderID>
+        <timeStamp>2024-03-20</timeStamp>
+        <totalPrice>9.0</totalPrice>
+        <status>false</status>
+    </order>
+    <order>
+        <customer>
+            <name>John Doe</name>
+            <username>johndoe123</username>
+            <address>123 Main Street, Anytown, NY 12345, United States</address>
+        </customer>
+        <product>
+            <name>Mocha Madness Frappe</name>
+            <type>b</type>
+            <review>4.9</review>
+            <image>Mocha Frappe.png</image>
+            <size>small</size>
+            <quantity>1</quantity>
+        </product>
+        <orderID>1</orderID>
+        <timeStamp>2024-03-21</timeStamp>
+        <totalPrice>6.0</totalPrice>
+        <status>false</status>
+    </order>
 </orders>

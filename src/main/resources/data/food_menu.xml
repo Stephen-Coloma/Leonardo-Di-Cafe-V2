@@ -6,8 +6,8 @@
         <reviewCount>19</reviewCount>
         <image>Chocolate Charm.png</image>
         <description>Irresistible chocolate cake that charms the taste buds with every bite.</description>
-        <amountSold>130</amountSold>
-        <quantity>19</quantity>
+        <amountSold>131</amountSold>
+        <quantity>18</quantity>
         <price>16.5</price>
     </food>
     <food name="Box of 6 Cupcakes">
@@ -17,8 +17,8 @@
         <reviewCount>24</reviewCount>
         <image>Box Of 6 Cupcakes.jpg</image>
         <description>Enjoy a variety of flavors with this box containing 6 delectable cupcakes.</description>
-        <amountSold>100</amountSold>
-        <quantity>18</quantity>
+        <amountSold>101</amountSold>
+        <quantity>17</quantity>
         <price>18.0</price>
     </food>
     <food name="Chocolate Chip Cookie">
