@@ -50,13 +50,9 @@ public class ServerModel {
     public ServerModel() {
         foodMenu = JSONUtility.loadFoodMenu("src/main/resources/data/food_menu.json");
         beverageMenu = JSONUtility.loadBeverageMenu(new File("src/main/resources/data/beverage_menu.json"));
+        customerAccountList = (List<Customer>) JSONUtility.loadCustomerAccounts("src/main/resources/data/customer_account_list.json");
 //        customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/resources/data/customer_account_list.xml"));
-//        orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/resources/data/order_list.xml"));
-
-//        foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/resources/data/food_menu.xml"));
-//        beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/resources/data/beverage_menu.xml"));
-        customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/resources/data/customer_account_list.xml"));
-        orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/resources/data/order_list.xml"));
+        orderList = (List<Order>) JSONUtility.loadOrderList(new File("src/main/resources/data/order_list.json"));
 
         //set up
         userLoggedIn = new ArrayList<>();

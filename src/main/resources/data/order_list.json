@@ -1,0 +1,112 @@
+[
+  {
+    "customer": {
+      "name": "John Doe",
+      "username": "johndoe123",
+      "address": "123 Main Street, Anytown, NY 12345, United States"
+    },
+    "orders": [
+      {
+        "sizeQuantity": {
+          "small": 2,
+          "large": 0,
+          "medium": 0
+        },
+        "sizePrice": {
+          "small": 0.0,
+          "large": 0.0,
+          "medium": 0.0
+        },
+        "name": "Espresso Roast",
+        "type": "b",
+        "review": 5.0,
+        "reviewCount": 0,
+        "image": [
+          "sample.png",
+          null
+        ],
+        "amountSold": 0
+      },
+      {
+        "sizeQuantity": {
+          "small": 0,
+          "large": 0,
+          "medium": 1
+        },
+        "sizePrice": {
+          "small": 0.0,
+          "large": 0.0,
+          "medium": 0.0
+        },
+        "name": "French Roast",
+        "type": "b",
+        "review": 5.0,
+        "reviewCount": 0,
+        "image": [
+          "sample.png",
+          null
+        ],
+        "amountSold": 0
+      }
+    ],
+    "timeStamp": "12/23/2023",
+    "totalPrice": 145.0,
+    "status": false,
+    "ID": 0
+  },
+  {
+    "customer": {
+      "name": "Ada Lovelace",
+      "username": "adalovelace123",
+      "address": "123 Main Street, Barangay San Antonio, Quezon City, Metro Manila, 1105"
+    },
+    "orders": [
+      {
+        "sizeQuantity": {
+          "small": 0,
+          "large": 0,
+          "medium": 4
+        },
+        "sizePrice": {
+          "small": 0.0,
+          "large": 0.0,
+          "medium": 0.0
+        },
+        "name": "Espresso Roast",
+        "type": "b",
+        "review": 5.0,
+        "reviewCount": 0,
+        "image": [
+          "sample.png",
+          null
+        ],
+        "amountSold": 0
+      },
+      {
+        "sizeQuantity": {
+          "small": 2,
+          "large": 0,
+          "medium": 0
+        },
+        "sizePrice": {
+          "small": 0.0,
+          "large": 0.0,
+          "medium": 0.0
+        },
+        "name": "French Roast",
+        "type": "b",
+        "review": 5.0,
+        "reviewCount": 0,
+        "image": [
+          "sample.png",
+          null
+        ],
+        "amountSold": 0
+      }
+    ],
+    "timeStamp": "12/24/2023",
+    "totalPrice": 170.0,
+    "status": false,
+    "ID": 1
+  }
+]
