@@ -105,4 +105,23 @@
         <totalPrice>9.0</totalPrice>
         <status>false</status>
     </order>
+    <order>
+        <customer>
+            <name>John Doe</name>
+            <username>johndoe123</username>
+            <address>123 Main Street, Anytown, NY 12345, United States</address>
+        </customer>
+        <product>
+            <name>Mocha Madness Frappe</name>
+            <type>b</type>
+            <review>4.9</review>
+            <image>Mocha Frappe.png</image>
+            <size>small</size>
+            <quantity>1</quantity>
+        </product>
+        <orderID>1</orderID>
+        <timeStamp>2024-03-21</timeStamp>
+        <totalPrice>6.0</totalPrice>
+        <status>false</status>
+    </order>
 </orders>

@@ -87,14 +87,14 @@ public class MainMenuClientPageController {
     private void setComponentActions() {
         // set up action listener for food category button
         mainMenuView.getMainMenuFoodButton().setOnAction(actionEvent -> {
-            mainMenuView.getGridPaneMenu().getChildren().clear(); // remove existing menu from the grid before switching menus
+            mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
             currentLoadedMenu = 'f';
             loadFoodMenu();
         });
 
         // set up action listener for beverages category button
         mainMenuView.getMainMenuBeveragesButton().setOnAction(actionEvent -> {
-            mainMenuView.getGridPaneMenu().getChildren().clear(); // remove existing menu from the grid before switching menus
+            mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
             currentLoadedMenu = 'b';
             loadBeverageMenu();
         });
@@ -268,9 +268,7 @@ public class MainMenuClientPageController {
                     for (Food food : foodProducts) {
                         Node productCard = createProductCard(food);
 
-                        mainMenuView.getGridPaneMenu().getChildren().add(productCard);
-                        GridPane.setConstraints(productCard, columnIndex, rowIndex);
-
+                        mainMenuView.getFlowPane().getChildren().add(productCard);
                         if (columnIndex == 1) {
                             columnIndex = 0;
                             rowIndex++;
@@ -309,8 +307,7 @@ public class MainMenuClientPageController {
                     for (Beverage beverage : beverageProducts) {
                         Node productCard = createProductCard(beverage);
 
-                        mainMenuView.getGridPaneMenu().getChildren().add(productCard);
-                        GridPane.setConstraints(productCard, columnIndex, rowIndex);
+                        mainMenuView.getFlowPane().getChildren().add(productCard);
 
                         if (columnIndex == 1) {
                             columnIndex = 0;
@@ -392,7 +389,7 @@ public class MainMenuClientPageController {
     } // end of debounceFilterMenuItems
 
     private void filterMenuItems(String searchText) {
-        mainMenuView.getGridPaneMenu().getChildren().clear();
+        mainMenuView.getFlowPane().getChildren().clear();
 
         List<Node> filteredProductCards = new ArrayList<>();
         int columnIndex = 0;
@@ -420,7 +417,7 @@ public class MainMenuClientPageController {
         }
 
         for (Node productCard : filteredProductCards) {
-            mainMenuView.getGridPaneMenu().getChildren().add(productCard);
+            mainMenuView.getFlowPane().getChildren().add(productCard);
             GridPane.setConstraints(productCard, columnIndex, rowIndex);
             if (columnIndex == 1) {
                 columnIndex = 0;

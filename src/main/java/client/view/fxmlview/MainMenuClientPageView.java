@@ -13,6 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
@@ -54,7 +55,7 @@ public class MainMenuClientPageView {
     @FXML
     private ScrollPane scrollPaneCart;
     @FXML
-    private GridPane gridPaneMenu;
+    private FlowPane flowPane;
     @FXML
     private ScrollPane scrollPaneMenu;
 
@@ -78,6 +79,7 @@ public class MainMenuClientPageView {
 
     @FXML
     private Pane loadingIndicatorPanel;
+
 
     public void setActionClearCartButton(EventHandler<ActionEvent> event){
         clearCartButton.setOnAction(event);
@@ -187,8 +189,8 @@ public class MainMenuClientPageView {
         return gridPaneCart;
     }
 
-    public GridPane getGridPaneMenu() {
-        return gridPaneMenu;
+    public FlowPane getFlowPane() {
+        return flowPane;
     }
 
     public Button getMainMenuBeveragesButton() {
