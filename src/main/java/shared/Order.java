@@ -60,7 +60,7 @@ public class Order implements Serializable {
         }
     }
 
-    /**This constructor will be used only for reading order_list.xml */
+    /**This constructor will be used only for reading order_list.json */
     public Order(Customer customer, List<Product> orders, int id, String timeStamp, double totalPrice, boolean status){
         this.customer = customer;
         this.orders = orders;
