@@ -7,11 +7,6 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-
 public class Client extends Application {
     public static String IP_ADDRESS;
     public static final int PORT = 2000;
