@@ -526,8 +526,6 @@ public class MainMenuClientPageController {
                             String clientId = String.valueOf(checkoutPageModel.getCustomer().getName().hashCode());
                             Order order = checkoutPageModel.getOrderFromClient();
 
-                            System.out.println(order.getTotalPrice()); // debug purposes
-
                             //this try catch handles exceptions from the server by the RMI exception throws lists from OrderManagement interface
                             try {
                                 Order successfulOrder = mainMenuModel.processCheckout(clientId, order); //order returned after processing from the server
