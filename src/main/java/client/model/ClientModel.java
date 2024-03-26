@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ClientModel {
+    private boolean menuUpdate;
     private HashMap<String, Food> foodMenu; // return from server
     private HashMap<String, Beverage> beverageMenu; //return from server
     private Customer customer; //return from server
@@ -15,6 +16,7 @@ public class ClientModel {
 
     /**This initially sets all fields to null.*/
     public ClientModel() {
+        menuUpdate = false;
         foodMenu = null;
         beverageMenu = null;
         customer = null;
@@ -84,4 +86,12 @@ public class ClientModel {
     public void setOrder(Order order) {
         this.order = order;
     }
-}
+
+    public boolean getMenuUpdate() {
+        return menuUpdate;
+    }
+
+    public void setMenuUpdate(boolean menuUpdate) {
+        this.menuUpdate = menuUpdate;
+    }
+} // end of ClientModel class

@@ -20,5 +20,6 @@ public class ClientCallback extends UnicastRemoteObject implements Broadcast {
         System.out.println("updated menu");
         clientModel.setFoodMenu(foodMenu);
         clientModel.setBeverageMenu(beverageMenu);
-    }
-} // end of ClientCallback
+        clientModel.setMenuUpdate(true);
+    } // end of updateMenu
+} // end of ClientCallback class

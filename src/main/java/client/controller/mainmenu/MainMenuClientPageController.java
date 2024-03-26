@@ -1,8 +1,7 @@
 package client.controller.mainmenu;
 
-
-import client.controller.checkout.CheckoutPageController;
 import client.controller.checkout.CartItemCardController;
+import client.controller.checkout.CheckoutPageController;
 import client.controller.login.LoginPageController;
 import client.controller.orderhistory.OrderHistoryPageController;
 import client.model.ClientCallback;
@@ -25,7 +24,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -39,13 +37,7 @@ import util.PushNotification;
 import util.exception.OutOfStockException;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.net.SocketException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -53,16 +45,15 @@ import java.util.*;
 
 public class MainMenuClientPageController {
     private Stage primaryStage;
-    private char currentLoadedMenu = 'f';
+    private List<Node> allProductCardNodes = new ArrayList<>();
+    private List<Node> foodCardNodes = new ArrayList<>();
+    private List<Node> beverageCardNodes = new ArrayList<>();
     private final MainMenuClientPageView mainMenuView;
+    private char currentLoadedMenu = 'f';
     private final MainMenuClientPageModel mainMenuModel;
     private LoginPageController loginPageController;
     private FXMLLoader loader;
     private Parent root;
-    private Object[] serverResponse;
-    private Socket socket; // to be passed to client
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
     private int cartColumn = 0; //for cart scrollPane
     private int cartRow = 1; //for cart scrollPane
     private double cartTotalPrice = 0; //for cart purposes
@@ -83,14 +74,68 @@ public class MainMenuClientPageController {
         String accountName = this.mainMenuModel.getClientModel().getCustomer().getName();
         this.mainMenuView.getAccountNameLabel().setText(accountName);
 
+        // start a task to update the latest product changes of the FlowPane from the server
+        listenToProductUpdates();
+
         // initial menu
-//        loadFoodMenu();
-        loadAllMenu();
+        currentLoadedMenu = 'a';
+        loadMenu(1, "All Products");
 
         setComponentActions();
 
         debounceTimer = new Timer();
     }
+
+    private void listenToProductUpdates() {
+        for (Food food: mainMenuModel.getClientModel().getFoodMenu().values()) {
+            foodCardNodes.add(createProductCard(food));
+        }
+
+        for (Beverage beverage: mainMenuModel.getClientModel().getBeverageMenu().values()) {
+            beverageCardNodes.add(createProductCard(beverage));
+        }
+
+        allProductCardNodes.addAll(foodCardNodes);
+        allProductCardNodes.addAll(beverageCardNodes);
+
+        Task<Void> productUpdateTask = new Task<>() {
+            @Override
+            protected Void call() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+
+                        if (mainMenuModel.getClientModel().getMenuUpdate()) {
+                            System.out.println("Updating FlowPane to the Latest Product Changes");
+
+                            foodCardNodes = new ArrayList<>();
+                            beverageCardNodes = new ArrayList<>();
+                            allProductCardNodes = new ArrayList<>();
+
+                            for (Food food : mainMenuModel.getClientModel().getFoodMenu().values()) {
+                                foodCardNodes.add(createProductCard(food));
+                            }
+
+                            for (Beverage beverage : mainMenuModel.getClientModel().getBeverageMenu().values()) {
+                                beverageCardNodes.add(createProductCard(beverage));
+                            }
+
+                            allProductCardNodes.addAll(foodCardNodes);
+                            allProductCardNodes.addAll(beverageCardNodes);
+                            mainMenuModel.getClientModel().setMenuUpdate(false);
+                        }
+                    } catch (InterruptedException exception) {
+                        exception.printStackTrace();
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+        };
+
+        Thread updateThread = new Thread(productUpdateTask);
+        updateThread.setDaemon(true);
+        updateThread.start();
+    } // end of listenToProductUpdates
 
     private void registerClientCallback() {
         try {
@@ -99,27 +144,27 @@ public class MainMenuClientPageController {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-    }
+    } // end of registerClientCallback
 
     private void setComponentActions() {
+        mainMenuView.getMainMenuAllButton().setOnAction(actionEvent -> {
+            mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
+            currentLoadedMenu = 'a';
+            loadMenu(1, "All Products");
+        });
+
         // set up action listener for food category button
         mainMenuView.getMainMenuFoodButton().setOnAction(actionEvent -> {
             mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
             currentLoadedMenu = 'f';
-            loadFoodMenu();
+            loadMenu(2, "Food Category");
         });
 
         // set up action listener for beverages category button
         mainMenuView.getMainMenuBeveragesButton().setOnAction(actionEvent -> {
             mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
             currentLoadedMenu = 'b';
-            loadBeverageMenu();
-        });
-
-        mainMenuView.getMainMenuAllButton().setOnAction(actionEvent -> {
-            mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
-//            currentLoadedMenu = 'b';
-            loadAllMenu();
+            loadMenu(3, "Beverage Category");
         });
 
         //setting up the action for setUpActionClearCartButtonButton
@@ -128,7 +173,7 @@ public class MainMenuClientPageController {
         //set up the action for checking out
         setUpActionCheckoutButton();
 
-        mainMenuView.getProductSearchBar().textProperty().addListener((observable, oldValue, newValue) -> debounceFilterMenuItems(newValue));
+        mainMenuView.getProductSearchBar().textProperty().addListener((observable, oldValue, newValue) -> filterMenuItems(newValue));
 
         //set up action for logout button
         setUpActionLogoutButton();
@@ -138,8 +183,6 @@ public class MainMenuClientPageController {
 
     /**This method implements the order history button*/
     private void setUpActionOrderHistoryButton() {
-        //data to be sent to server
-
         this.mainMenuView.setUpActionOrderHistoryButton((ActionEvent event) ->{
             if (this.mainMenuModel.getClientModel().getCustomer().getOrderHistory().isEmpty()){
                 PushNotification.toastSuccess("Order History Empty", "Your history is empty, try ordering first!");
@@ -207,16 +250,9 @@ public class MainMenuClientPageController {
         mainMenuView.setDateLabel(formattedDate);
     } // end of setupDate
 
-    private void loadAllMenu(){
-        mainMenuView.getProductTypeLabel().setText("All Products");
-
+    private void loadMenu(int category, String heading) {
         LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
-
-        HashMap<String, Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu();
-        List<Food> foodProducts = new ArrayList<>(foodMenu.values());
-
-        HashMap<String, Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu();
-        List<Beverage> beverageProducts = new ArrayList<>(beverageMenu.values());
+        mainMenuView.getProductTypeLabel().setText(heading);
 
         Task<Void> loadingTask = new Task<>() {
             @Override
@@ -224,34 +260,11 @@ public class MainMenuClientPageController {
                 Thread.sleep(2000);
 
                 Platform.runLater(() -> {
-                    int columnIndex = 0;
-                    int rowIndex = 1;
-
-                    for (Food food : foodProducts) {
-                        Node productCard = createProductCard(food);
-
-                        mainMenuView.getFlowPane().getChildren().add(productCard);
-                        if (columnIndex == 1) {
-                            columnIndex = 0;
-                            rowIndex++;
-                        } else {
-                            columnIndex++;
-                        }
+                    switch (category) {
+                        case 1 -> mainMenuView.getFlowPane().getChildren().setAll(allProductCardNodes);
+                        case 2 -> mainMenuView.getFlowPane().getChildren().setAll(foodCardNodes);
+                        case 3 -> mainMenuView.getFlowPane().getChildren().setAll(beverageCardNodes);
                     }
-
-                    for (Beverage beverage : beverageProducts) {
-                        Node productCard = createProductCard(beverage);
-
-                        mainMenuView.getFlowPane().getChildren().add(productCard);
-
-                        if (columnIndex == 1) {
-                            columnIndex = 0;
-                            rowIndex++;
-                        } else {
-                            columnIndex++;
-                        }
-                    }
-
                     LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
                 });
                 return null;
@@ -259,87 +272,7 @@ public class MainMenuClientPageController {
         };
         Thread loadingThread = new Thread(loadingTask);
         loadingThread.start();
-    }
-
-
-    private void loadFoodMenu() {
-        mainMenuView.getProductTypeLabel().setText("Food Category");
-
-        LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
-
-        HashMap<String, Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu();
-        List<Food> foodProducts = new ArrayList<>(foodMenu.values());
-
-        Task<Void> loadingTask = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                Thread.sleep(2000);
-
-                Platform.runLater(() -> {
-                    int columnIndex = 0;
-                    int rowIndex = 1;
-
-                    for (Food food : foodProducts) {
-                        Node productCard = createProductCard(food);
-
-                        mainMenuView.getFlowPane().getChildren().add(productCard);
-                        if (columnIndex == 1) {
-                            columnIndex = 0;
-                            rowIndex++;
-                        } else {
-                            columnIndex++;
-                        }
-                    }
-
-                    LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
-                });
-                return null;
-            }
-        };
-
-        Thread loadingThread = new Thread(loadingTask);
-        loadingThread.start();
-    } // end of loadFoodMenu
-
-    private void loadBeverageMenu() {
-        mainMenuView.getProductTypeLabel().setText("Beverage Category");
-
-        LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
-
-        HashMap<String, Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu();
-        List<Beverage> beverageProducts = new ArrayList<>(beverageMenu.values());
-
-        Task<Void> loadingTask = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                Thread.sleep(2000);
-
-                Platform.runLater(() -> {
-                    int columnIndex = 0;
-                    int rowIndex = 1;
-
-                    for (Beverage beverage : beverageProducts) {
-                        Node productCard = createProductCard(beverage);
-
-                        mainMenuView.getFlowPane().getChildren().add(productCard);
-
-                        if (columnIndex == 1) {
-                            columnIndex = 0;
-                            rowIndex++;
-                        } else {
-                            columnIndex++;
-                        }
-                    }
-
-                    LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
-                });
-                return null;
-            }
-        };
-
-        Thread loadingThread = new Thread(loadingTask);
-        loadingThread.start();
-    } // end of loadBeverageMenu
+    } // end of loadMenu
 
     private Node createProductCard(Product product) {
         try {
@@ -353,9 +286,9 @@ public class MainMenuClientPageController {
 
             //this code setups up add to cart button of each card
             menuCardView.getAddProductButton().setOnAction(actionEvent -> {
-                MenuCardModel updatedMenuCardModel = new MenuCardModel();
-                MenuCardView updatedMenuModelCardView = loader.getController();
-                MenuCardController updatedMenuCardController = new MenuCardController(menuCardModel, menuCardView);
+//                MenuCardModel updatedMenuCardModel = new MenuCardModel(); // remove this if finalized, this is just temporary commented out for optimizing the client program
+//                MenuCardView updatedMenuModelCardView = loader.getController(); // remove this if finalized, this is just temporary commented out for optimizing the client program
+                MenuCardController updatedMenuCardController = new MenuCardController(menuCardModel, menuCardView); // remove if something weird happens
 
                 Product product1 = menuCardModel.getProduct();
                 if (product1 instanceof Food food) {
@@ -384,63 +317,79 @@ public class MainMenuClientPageController {
         }
     } // end of createProductCard
 
-    private void debounceFilterMenuItems(String searchText) {
+    private void filterMenuItems(String searchText) {
         debounceTimer.cancel();
         debounceTimer = new Timer();
 
-        LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
         debounceTimer.schedule(new TimerTask() {
 
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    filterMenuItems(searchText);
-                    LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+                    LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+                    mainMenuView.getFlowPane().getChildren().clear();
+
+                    Task<Void> filterProductsTask = new Task<>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            Thread.sleep(2000);
+
+                            Platform.runLater(() -> {
+                                List<Node> filteredAllProductCardNodes = new ArrayList<>();
+                                List<Node> filteredFoodCardNodes = new ArrayList<>();
+                                List<Node> filteredBeverageCardNodes = new ArrayList<>();
+
+
+                                if (!searchText.isEmpty()) {
+                                    filteredFoodCardNodes = mainMenuModel.getClientModel().getFoodMenu().values().stream()
+                                            .filter(food -> food.getName().toLowerCase().contains(searchText.toLowerCase()))
+                                            .map(MainMenuClientPageController.this::createProductCard)
+                                            .toList();
+
+                                    filteredBeverageCardNodes = mainMenuModel.getClientModel().getBeverageMenu().values().stream()
+                                            .filter(beverage -> beverage.getName().toLowerCase().contains(searchText.toLowerCase()))
+                                            .map(MainMenuClientPageController.this::createProductCard)
+                                            .toList();
+
+                                    filteredAllProductCardNodes.addAll(filteredFoodCardNodes);
+                                    filteredAllProductCardNodes.addAll(filteredBeverageCardNodes);
+                                }
+
+                                switch (currentLoadedMenu) {
+                                    case 'a' -> {
+                                        if (searchText.isEmpty()) {
+                                            mainMenuView.getFlowPane().getChildren().setAll(allProductCardNodes);
+                                        } else {
+                                            mainMenuView.getFlowPane().getChildren().setAll(filteredAllProductCardNodes);
+                                        }
+                                    }
+                                    case 'f' -> {
+                                        if (searchText.isEmpty()) {
+                                            mainMenuView.getFlowPane().getChildren().setAll(foodCardNodes);
+                                        } else {
+                                            mainMenuView.getFlowPane().getChildren().setAll(filteredFoodCardNodes);
+                                        }
+                                    }
+                                    case 'b' -> {
+                                        if (searchText.isEmpty()) {
+                                            mainMenuView.getFlowPane().getChildren().setAll(beverageCardNodes);
+                                        } else {
+                                            mainMenuView.getFlowPane().getChildren().setAll(filteredBeverageCardNodes);
+                                        }
+                                    }
+                                }
+                                LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+                            });
+                            return null;
+                        }
+                    };
+                    Thread filterThread = new Thread(filterProductsTask);
+                    filterThread.start();
                 });
             }
         }, DEBOUNCE_DELAY);
 
     } // end of debounceFilterMenuItems
-
-    private void filterMenuItems(String searchText) {
-        mainMenuView.getFlowPane().getChildren().clear();
-
-        List<Node> filteredProductCards = new ArrayList<>();
-        int columnIndex = 0;
-        int rowIndex = 1;
-        if (currentLoadedMenu == 'f') {
-            HashMap<String, Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu();
-            List<Food> filteredFoodProducts = foodMenu.values().stream()
-                    .filter(food -> food.getName().toLowerCase().contains(searchText.toLowerCase()))
-                    .toList();
-
-            for (Food food : filteredFoodProducts) {
-                Node productCard = createProductCard(food);
-                filteredProductCards.add(productCard);
-            }
-        } else {
-            HashMap<String, Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu();
-            List<Beverage> filteredBeverageProducts = beverageMenu.values().stream()
-                    .filter(beverage -> beverage.getName().toLowerCase().contains(searchText.toLowerCase()))
-                    .toList();
-
-            for (Beverage beverage : filteredBeverageProducts) {
-                Node productCard = createProductCard(beverage);
-                filteredProductCards.add(productCard);
-            }
-        }
-
-        for (Node productCard : filteredProductCards) {
-            mainMenuView.getFlowPane().getChildren().add(productCard);
-            GridPane.setConstraints(productCard, columnIndex, rowIndex);
-            if (columnIndex == 1) {
-                columnIndex = 0;
-                rowIndex++;
-            } else {
-                columnIndex++;
-            }
-        }
-    }
 
     /**
      * This method clears up all the contents of the cart.
@@ -577,6 +526,8 @@ public class MainMenuClientPageController {
                             String clientId = String.valueOf(checkoutPageModel.getCustomer().getName().hashCode());
                             Order order = checkoutPageModel.getOrderFromClient();
 
+                            System.out.println(order.getTotalPrice()); // debug purposes
+
                             //this try catch handles exceptions from the server by the RMI exception throws lists from OrderManagement interface
                             try {
                                 Order successfulOrder = mainMenuModel.processCheckout(clientId, order); //order returned after processing from the server
@@ -592,7 +543,6 @@ public class MainMenuClientPageController {
                             } catch (RemoteException e) {
                                 throw new RuntimeException(e);
                             }
-//                            sendData(clientId, "PROCESS_ORDER",order);
 
                             checkoutPageModel.getCart().clear();
                             checkoutPageView.closeCheckoutView();
@@ -623,7 +573,7 @@ public class MainMenuClientPageController {
                 selectFoodController = new SelectFoodController(new SelectFoodModel(product), selectFoodLoader.getController());
                 Scene scene = new Scene(root);
                 Stage popupStage = new Stage();
-                popupStage.getIcons().add(new Image(getClass().getResource("/images/client/client_app_logo.png").toExternalForm()));
+                popupStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/images/client/client_app_logo.png")).toExternalForm()));
                 popupStage.setScene(scene);
                 popupStage.initModality(Modality.APPLICATION_MODAL);
                 popupStage.showAndWait(); //wait until the popup stops
@@ -634,7 +584,7 @@ public class MainMenuClientPageController {
                 selectBeverageVariationController = new SelectBeverageVariationController(new SelectBeverageVariationModel(product), selectBeverageVariationLoader.getController());
                 Scene scene = new Scene(root);
                 Stage popupStage = new Stage();
-                popupStage.getIcons().add(new Image(getClass().getResource("/images/client/client_app_logo.png").toExternalForm()));
+                popupStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/images/client/client_app_logo.png")).toExternalForm()));
                 popupStage.setScene(scene);
                 popupStage.initModality(Modality.APPLICATION_MODAL);
                 popupStage.showAndWait(); //wait until the popup stops
@@ -808,36 +758,8 @@ public class MainMenuClientPageController {
         this.loader = loader;
     }
 
-    public Parent getRoot() {
-        return root;
-    }
-
-    public void setRoot(Parent root) {
-        this.root = root;
-    }
-
-    public Object[] getServerResponse() {
-        return serverResponse;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
-
-    public ObjectOutputStream getOut() {
-        return out;
-    }
-
-    public void setOut(ObjectOutputStream out) {
-        this.out = out;
-    }
-
-    public ObjectInputStream getIn() {
-        return in;
-    }
-
-    public void setIn(ObjectInputStream in) {
-        this.in = in;
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     private void showLoginPage(ActionEvent event) {
@@ -854,34 +776,5 @@ public class MainMenuClientPageController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void showServerErrorUI() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/client/server_error.fxml"));
-            Scene serverErrorScene = new Scene(root);
-            Stage popUpStage = new Stage();
-            popUpStage.setScene(serverErrorScene);
-            popUpStage.show();
-        }catch (IOException exception){
-            exception.printStackTrace();
-        }
-    }
-
-    private void closeResources() {
-        try {
-            socket.close();
-            in.close();
-            out.close();
-            if (in == null && out == null) {
-                System.out.println("closed stream resources");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    } // end of closeResources
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
     }
 } // end of MainMenuClientPageController class

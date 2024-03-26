@@ -24,6 +24,7 @@ public class OrderManagementService extends UnicastRemoteObject implements Order
         updateMenu(order);
 
         Order successfulOrder = new Order(order); //if it reaches here, means the order is successful
+        System.out.println(successfulOrder.getTotalPrice()); // debug purposes
 
         // therefore add to orderList for the admin
         serverModel.getOrderList().add(successfulOrder);
