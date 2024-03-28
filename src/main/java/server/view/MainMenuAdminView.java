@@ -1,5 +1,7 @@
 package server.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,9 +32,8 @@ public class MainMenuAdminView {
     @FXML
     private Button logoutButton;
 
-    public void logout() {
-        //TODO: implementation of logging out of server saves the data in the json files
-        System.exit(0);
+    public void logout(EventHandler<ActionEvent> e) {
+        logoutButton.setOnAction(e);
     }
 
     public void setTimeLabel(String value) {

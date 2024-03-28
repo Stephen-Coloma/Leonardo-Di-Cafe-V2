@@ -1,0 +1,44 @@
+#textArea {
+    -fx-border-color: #634921;
+    -fx-border-width: 0 0 0 2
+}
+
+#textArea .content {
+    -fx-background-color: #ECE9E3;
+}
+
+#saveBT {
+    -fx-text-fill: white;
+    -fx-background-color: #5dae65;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+}
+
+#deleteBT {
+    -fx-text-fill: white;
+    -fx-background-color: #ae5d5d;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+}
+
+#closeBT {
+    -fx-text-fill: white;
+    -fx-background-color: #b59c7a;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+}
+
+#saveBT: hover {
+    -fx-text-fill: black;
+    -fx-background-color: #70d479;
+}
+
+#deleteBT: hover {
+    -fx-text-fill: black;
+    -fx-background-color: #d16f6f;
+}
+
+#closeBT: hover {
+    -fx-text-fill: black;
+    -fx-background-color: #d1b48c;
+}

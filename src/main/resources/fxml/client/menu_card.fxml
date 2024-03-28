@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="365.0" style="-fx-border-width: 3 3 3 3; -fx-border-color: #a38157;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.MenuCardView">
+<HBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="363.0" style="-fx-border-width: 3 3 3 3; -fx-border-color: #a38157;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.MenuCardView">
    <children>
       <VBox prefHeight="124.0" prefWidth="441.0">
          <children>
@@ -62,7 +62,7 @@
                </font>
             </Label>
          </children></VBox>
-      <Button fx:id="addProductButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #e4d8c6; -fx-border-color: #66382a; -fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5;" text="+" textFill="#634921">
+      <Button fx:id="addProductButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #e4d8c6; -fx-border-color: #66382a; -fx-border-radius: 50; -fx-background-radius: 50;" text="+" textFill="#634921">
          <HBox.margin>
             <Insets bottom="8.0" left="2.0" right="8.0" />
          </HBox.margin>

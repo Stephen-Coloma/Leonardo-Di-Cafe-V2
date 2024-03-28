@@ -124,7 +124,7 @@
                               <Insets bottom="15.0" top="15.0" />
                           </VBox.margin>
                       </Button>
-                      <Button fx:id="logoutButton" alignment="CENTER" layoutX="10.0" layoutY="212.0" mnemonicParsing="false" onMouseClicked="#logout" onMouseEntered="#logoutButtonEntered" onMouseExited="#logoutButtonExited" prefHeight="47.0" prefWidth="160.0" style="-fx-background-color: #dc472d; -fx-background-radius: 10;" text="Logout" textAlignment="CENTER" textFill="WHITE">
+                      <Button fx:id="logoutButton" alignment="CENTER" layoutX="10.0" layoutY="212.0" mnemonicParsing="false" onMouseEntered="#logoutButtonEntered" onMouseExited="#logoutButtonExited" prefHeight="47.0" prefWidth="160.0" style="-fx-background-color: #dc472d; -fx-background-radius: 10;" text="Logout" textAlignment="CENTER" textFill="WHITE">
                           <font>
                               <Font name="Verdana" size="25.0" />
                           </font>

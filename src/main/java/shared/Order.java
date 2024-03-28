@@ -43,12 +43,11 @@ public class Order implements Serializable {
         totalPrice = 0;
         for (Product product: successfullOrder.getOrders()) {
             if (product instanceof Food food){
-
-                totalPrice+=food.getPrice()*food.getQuantity(); //price for food
+                totalPrice+=food.getPrice();
             }else if (product instanceof Beverage beverage){
 
                 for (String variation: beverage.getSizeQuantity().keySet()) {
-                    totalPrice += beverage.getVariationPrice(variation)*beverage.getVariationQuantity(variation);
+                    totalPrice += beverage.getVariationPrice(variation);
                 }
             }
         }

@@ -39,19 +39,14 @@ public class MainMenuClientPageView {
     private ImageView cartImage;
     @FXML
     private Button clearCartButton;
-
     @FXML
     private Label cartLabel1;
-
     @FXML
     private Label cartLabel2;
-
     @FXML
     private Button checkoutButton;
-
     @FXML
     private GridPane gridPaneCart;
-
     @FXML
     private ScrollPane scrollPaneCart;
     @FXML
@@ -62,25 +57,20 @@ public class MainMenuClientPageView {
     private Button mainMenuAllButton;
     @FXML
     private Button mainMenuBeveragesButton;
-
     @FXML
     private Button mainMenuFoodButton;
-
     @FXML
     private Button orderHistoryMenuButton;
-
     @FXML
     private Label priceLabel;
-
     @FXML
     private Label productTypeLabel;
-
     @FXML
     private TextField productSearchBar;
-
     @FXML
     private Pane loadingIndicatorPanel;
-
+    @FXML
+    private ImageView accountDetailsImageView;
 
     public void setActionClearCartButton(EventHandler<ActionEvent> event){
         clearCartButton.setOnAction(event);
@@ -235,5 +225,9 @@ public class MainMenuClientPageView {
 
     public Button getLogoutButton() {
         return logoutButton;
+    }
+
+    public ImageView getAccountDetailsImageView() {
+        return accountDetailsImageView;
     }
 }

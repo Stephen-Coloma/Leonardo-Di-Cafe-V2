@@ -3,8 +3,11 @@ package client.model.fxmlmodel;
 import client.model.ClientModel;
 import shared.*;
 import shared.callback.Broadcast;
+import shared.rmiinterfaces.AccountManagement;
 import shared.rmiinterfaces.CallbackManagement;
 import shared.rmiinterfaces.OrderManagement;
+import util.exception.AccountExistsException;
+import util.exception.InvalidCredentialsException;
 import util.exception.OutOfStockException;
 
 import java.io.ObjectInputStream;
@@ -22,6 +25,7 @@ public class MainMenuClientPageModel {
     private Registry registry;
     private OrderManagement orderManagement;
     private CallbackManagement callbackManagement;
+    private AccountManagement accountManagement;
 
     public MainMenuClientPageModel(Object[] clientModelData, Registry registry) throws NotBoundException, RemoteException {
         //the serverResponse[2] responds Object[] {customer, foodMenu, beverageMenu}
@@ -35,6 +39,7 @@ public class MainMenuClientPageModel {
         this.registry = registry;
         this.orderManagement = (OrderManagement) registry.lookup("order management");
         callbackManagement = (CallbackManagement) registry.lookup("callback management");
+        accountManagement = (AccountManagement) registry.lookup("account management");
     }
 
     public Order processCheckout(String clientId, Order order) throws OutOfStockException, RemoteException {
@@ -44,6 +49,16 @@ public class MainMenuClientPageModel {
 
     public void processReview(String clientId, List<Product> ratedProducts) throws RemoteException {
         orderManagement.review(ratedProducts);
+    }
+
+    public void changeAccountDetails(String previousUsername, Customer updatedAccount) throws RemoteException, InvalidCredentialsException, AccountExistsException {
+        accountManagement.changeDetails(previousUsername, updatedAccount);
+        updatedAccount.setOrderHistory(clientModel.getCustomer().getOrderHistory());
+        clientModel.setCustomer(updatedAccount);
+    }
+
+    public void deleteAccount(Customer account) throws RemoteException {
+        accountManagement.deleteAccount(account);
     }
 
     public void processLogout(String clientId) throws RemoteException {

@@ -4,11 +4,13 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import server.controller.ServerController;
+import server.model.rmiservices.AccountManagementService;
 import server.model.rmiservices.AuthenticationService;
 import server.model.ServerModel;
 import server.model.rmiservices.CallbackManagementService;
 import server.model.rmiservices.OrderManagementService;
 import server.view.ServerView;
+import shared.rmiinterfaces.AccountManagement;
 import shared.rmiinterfaces.Authentication;
 import shared.rmiinterfaces.CallbackManagement;
 import shared.rmiinterfaces.OrderManagement;
@@ -60,6 +62,7 @@ public class Server extends Application {
                 //Remote object for Authentication
                 Authentication authentication = new AuthenticationService(model);
                 OrderManagement orderManagement = new OrderManagementService(model);
+                AccountManagement accountManagement = new AccountManagementService(model);
                 CallbackManagement callbackManagement = new CallbackManagementService(model);
 
                 //TODO: Add remote objects here before adding to the registry
@@ -70,6 +73,7 @@ public class Server extends Application {
                 //binding the friendly name to the registry
                 registry.bind("authentication", authentication);
                 registry.bind("order management", orderManagement);
+                registry.bind("account management", accountManagement);
                 registry.bind("callback management", callbackManagement);
 
                 System.out.println("Server bound services successfully");

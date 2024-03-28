@@ -25,6 +25,7 @@ import server.view.addproducts.AddProductPageView;
 import server.view.analytics.AnalyticsPageView;
 import server.view.inventory.InventoryPageView;
 import server.view.orders.OrderListPageView;
+import util.JSONUtility;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -46,6 +47,15 @@ public class MainMenuAdminController implements InventoryPageObserver, OrderList
     } // end of start
 
     public void setMainMenuButtons() {
+
+        // save progress after clicking logout button
+        view.logout(e -> {
+            JSONUtility.saveFoodMenu(model.getFoodMenu());
+            JSONUtility.saveBeverageMenu(model.getBeverageMenu());
+            JSONUtility.saveOrderList(model.getOrderList());
+            JSONUtility.saveCustomerAccounts(model.getCustomerAccountList());
+            System.exit(0);
+        });
 
         view.getHomeButton().setOnMouseClicked(actionEvent -> view.returnToHomePage());
 

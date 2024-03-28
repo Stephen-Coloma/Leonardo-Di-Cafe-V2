@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.MainMenuClientPageView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.MainMenuClientPageView">
    <right>
       <VBox prefHeight="694.0" prefWidth="275.0" BorderPane.alignment="CENTER">
          <children>
@@ -105,9 +94,9 @@
    <top>
       <VBox prefHeight="119.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="1200.0" style="-fx-background-color: #634921;">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="1200.0" style="-fx-background-color: #634921;">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="600.0" spacing="5.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="553.0" spacing="5.0">
                      <children>
                         <ImageView fitHeight="32.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -136,6 +125,11 @@
                         <Insets right="25.0" />
                      </padding>
                   </VBox>
+                  <ImageView fx:id="accountDetailsImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/client/accountdetails/user.png" />
+                     </image>
+                  </ImageView>
                </children></HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ECE9E3; -fx-border-width: 0 0 2 0; -fx-border-color: #A38157;">
                <children>
@@ -252,9 +246,9 @@
       </VBox>
    </left>
    <center>
-      <ScrollPane fx:id="scrollPaneMenu" focusTraversable="false" prefHeight="665.0" prefWidth="720.0" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scrollPaneMenu" focusTraversable="false" hbarPolicy="NEVER" minWidth="-Infinity" prefHeight="665.0" prefWidth="730.0" BorderPane.alignment="CENTER">
          <content>
-            <FlowPane fx:id="flowPane" prefHeight="0.0" prefWidth="744.0" />
+            <FlowPane fx:id="flowPane" hgap="1.0" prefHeight="0.0" prefWidth="730.0" vgap="1.0" />
          </content></ScrollPane>
    </center>
 </BorderPane>
