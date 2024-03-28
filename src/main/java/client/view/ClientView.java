@@ -19,6 +19,8 @@ public class ClientView {
             loader = new FXMLLoader(getClass().getResource("/fxml/client/landing_page.fxml"));
             Scene scene = new Scene(loader.load());
             stage.setTitle("LEONARDO D' Cafe [CLIENT]");
+            stage.setResizable(false);
+            stage.setFullScreen(false);
             stage.setScene(scene);
             stage.show();
         } catch (IOException ioException) {

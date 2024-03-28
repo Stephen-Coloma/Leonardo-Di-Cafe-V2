@@ -1,15 +1,13 @@
 package client.controller.mainmenu;
 
+import client.controller.accountdetails.AccountDetailsController;
 import client.controller.checkout.CartItemCardController;
 import client.controller.checkout.CheckoutPageController;
 import client.controller.login.LoginPageController;
 import client.controller.orderhistory.OrderHistoryPageController;
 import client.model.ClientCallback;
 import client.model.fxmlmodel.*;
-import client.view.fxmlview.CheckoutPageView;
-import client.view.fxmlview.MainMenuClientPageView;
-import client.view.fxmlview.MenuCardView;
-import client.view.fxmlview.OrderHistoryPageView;
+import client.view.fxmlview.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -27,10 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import shared.Beverage;
-import shared.Food;
-import shared.Order;
-import shared.Product;
+import shared.*;
 import util.ImageUtility;
 import util.LoadingScreenUtility;
 import util.PushNotification;
@@ -165,6 +160,13 @@ public class MainMenuClientPageController {
             mainMenuView.getFlowPane().getChildren().clear(); // remove existing menu from the grid before switching menus
             currentLoadedMenu = 'b';
             loadMenu(3, "Beverage Category");
+        });
+
+        // set up action listener for account details button
+        mainMenuView.getAccountDetailsImageView().setOnMouseClicked(event -> {
+            AccountDetailsView accountDetailsView = AccountDetailsView.loadAccountDetailsPopup();
+            AccountDetailsController accountDetailsController = new AccountDetailsController(mainMenuModel, accountDetailsView, mainMenuView);
+            accountDetailsController.start();
         });
 
         //setting up the action for setUpActionClearCartButtonButton
@@ -388,7 +390,6 @@ public class MainMenuClientPageController {
                 });
             }
         }, DEBOUNCE_DELAY);
-
     } // end of debounceFilterMenuItems
 
     /**
