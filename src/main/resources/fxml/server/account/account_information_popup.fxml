@@ -96,7 +96,7 @@
                   </Pane>
                </top>
                <center>
-                  <TableView fx:id="orderTableView" focusTraversable="false" prefHeight="332.0" prefWidth="256.0" stylesheets="@../../../values/table_style.css" BorderPane.alignment="CENTER">
+                  <TableView fx:id="orderTableView" focusTraversable="false" prefHeight="332.0" prefWidth="256.0" stylesheets="@../../../css/table_style.css" BorderPane.alignment="CENTER">
                     <columns>
                       <TableColumn fx:id="ordersColumn" editable="false" prefWidth="183.0" resizable="false" text="Order" />
                       <TableColumn fx:id="timestampColumn" editable="false" prefWidth="89.0" resizable="false" text="Timestamp" />

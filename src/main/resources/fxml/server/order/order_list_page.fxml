@@ -22,7 +22,7 @@
         </Pane>
     </top>
     <center>
-          <TableView fx:id="orderTableView" prefHeight="677.0" prefWidth="1000.0" style="-fx-font-size: 13;" stylesheets="@../../../values/table_style.css">
+          <TableView fx:id="orderTableView" prefHeight="677.0" prefWidth="1000.0" style="-fx-font-size: 13;" stylesheets="@../../../css/table_style.css">
               <columns>
                   <TableColumn fx:id="orderIDColumn" editable="false" prefWidth="90.0" resizable="false" text="Order ID" />
                   <TableColumn fx:id="dateAndTimeColumn" editable="false" prefWidth="135.0" resizable="false" text="Date and Time" />
