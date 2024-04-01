@@ -4,9 +4,9 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import server.controller.ServerController;
+import server.model.ServerModel;
 import server.model.rmiservices.AccountManagementService;
 import server.model.rmiservices.AuthenticationService;
-import server.model.ServerModel;
 import server.model.rmiservices.CallbackManagementService;
 import server.model.rmiservices.OrderManagementService;
 import server.view.ServerView;
@@ -20,6 +20,7 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Objects;
 
 
 public class Server extends Application {
@@ -33,7 +34,7 @@ public class Server extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.getIcons().add(new Image(getClass().getResource("/images/server/server_app_logo.png").toExternalForm()));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/images/server/server_app_logo.png")).toExternalForm()));
 
         model = new ServerModel();
         view = new ServerView(stage);
@@ -77,9 +78,7 @@ public class Server extends Application {
                 registry.bind("callback management", callbackManagement);
 
                 System.out.println("Server bound services successfully");
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            } catch (AlreadyBoundException e) {
+            } catch (RemoteException | AlreadyBoundException e) {
                 throw new RuntimeException(e);
             }
 

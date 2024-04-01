@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.MainMenuClientPageView">
@@ -21,16 +22,16 @@
                         </GridPane>
                      </content>
                   </ScrollPane>
-                  <Label fx:id="cartLabel1" text="YOUR CART IS EMPTY!" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="30.0">
+                  <Label fx:id="cartLabel1" layoutX="55.0" layoutY="30.0" text="YOUR CART IS EMPTY!" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="30.0">
                      <font>
                         <Font name="Copperplate Gothic Bold" size="13.0" />
                      </font></Label>
-                  <Label fx:id="cartLabel2" text="Start ordering, we have what you need!" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="50.0">
+                  <Label fx:id="cartLabel2" layoutX="19.0" layoutY="50.0" text="Start ordering, we have what you need!" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="50.0">
                      <font>
                         <Font name="Copperplate Gothic Light" size="11.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="cartImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="75.0">
+                  <ImageView fx:id="cartImage" fitHeight="150.0" fitWidth="200.0" layoutX="38.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="38.0" AnchorPane.topAnchor="75.0">
                      <image>
                         <Image url="@../../images/client/menu/menu_emptybasket.png" />
                      </image>
@@ -133,7 +134,7 @@
                </children></HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ECE9E3; -fx-border-width: 0 0 2 0; -fx-border-color: #A38157;">
                <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="193.0" spacing="5.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="139.0" spacing="5.0">
                      <children>
                         <Label fx:id="timeLabel" text="Time" textFill="#634921">
                            <font>
@@ -150,9 +151,9 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </VBox>
-                  <HBox alignment="CENTER_LEFT" minWidth="-Infinity" prefHeight="65.0" prefWidth="745.0">
+                  <HBox alignment="CENTER_LEFT" minWidth="-Infinity" prefHeight="55.0" prefWidth="826.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="372.5">
+                        <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="412.5">
                            <children>
                               <Label fx:id="productTypeLabel" text="Category" textFill="#634921">
                                  <font>
@@ -163,7 +164,7 @@
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin></HBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="372.5">
+                        <HBox alignment="CENTER_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="380.0">
                            <children>
                               <Pane fx:id="loadingIndicatorPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0">
                                  <HBox.margin>
@@ -200,7 +201,7 @@
                         </VBox>
                         <VBox alignment="CENTER" minWidth="-Infinity" prefHeight="200.0" prefWidth="137.5">
                            <children>
-                              <Button fx:id="clearCartButton" mnemonicParsing="false" style="-fx-background-color: #a3815750;" text="Clear Cart" textFill="#795c39">
+                              <Button id="clearCartBT" fx:id="clearCartButton" mnemonicParsing="false" text="Clear Cart" textFill="#785a3b">
                                  <font>
                                     <Font name="Rockwell Condensed" size="20.0" />
                                  </font>
@@ -213,42 +214,84 @@
       </VBox>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="662.0" prefWidth="180.0" spacing="20.0" style="-fx-background-color: #ECE9E3; -fx-border-width: 0 2 0 0; -fx-border-color: #A38157;" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="661.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: #ECE9E3; -fx-border-width: 0 2 0 0; -fx-border-color: #A38157;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="mainMenuAllButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #b59c7a;" text="All" textFill="WHITE">
-               <font>
-                  <Font name="Copperplate Gothic Bold" size="23.0" />
-               </font>
-            </Button>
-            <Button fx:id="mainMenuFoodButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #b59c7a;" text="Food" textFill="WHITE">
-               <font>
-                  <Font name="Copperplate Gothic Bold" size="23.0" />
-               </font></Button>
-            <Button fx:id="mainMenuBeveragesButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #b59c7a;" text="Beverage" textFill="WHITE">
-               <font>
-                  <Font name="Copperplate Gothic Bold" size="23.0" />
-               </font></Button>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="496.0" prefWidth="160.0">
+            <Pane fx:id="allMenuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="80.0">
                <children>
-                  <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: #b59c7a;" text="LOGOUT" textFill="WHITE">
+                  <Text id="menuLB" fx:id="allMenuLB" fill="#b59c7a" layoutX="27.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ALL">
                      <font>
-                        <Font name="Copperplate Gothic Bold" size="24.0" />
+                        <Font name="Copperplate Gothic Bold" size="12.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Button>
+                  </Text>
+                  <Rectangle id="menuRectangle" fx:id="allMenuRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ece9e3" height="65.0" layoutX="8.0" stroke="TRANSPARENT" strokeType="INSIDE" width="65.0" />
+                  <ImageView fx:id="allImageView" fitHeight="40.0" fitWidth="40.0" layoutX="20.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/client/mainmenu/hamburgerSoda.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="mainMenuAllButton" layoutX="1.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="80.0" style="-fx-background-color: transparent;" />
+               </children>
+            </Pane>
+            <Pane fx:id="foodMenuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="80.0">
+               <children>
+                  <Text id="menuLB" fx:id="foodMenuLB" fill="#b59c7a" layoutX="20.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FOOD">
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Rectangle id="menuRectangle" fx:id="foodMenuRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ece9e3" height="65.0" layoutX="8.0" stroke="TRANSPARENT" strokeType="INSIDE" width="65.0" />
+                  <ImageView fx:id="foodImageView" fitHeight="40.0" fitWidth="40.0" layoutX="21.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/client/mainmenu/sandwich.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="mainMenuFoodButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="80.0" style="-fx-background-color: transparent;" />
+               </children>
+            </Pane>
+            <Pane fx:id="beverageMenuPane" layoutX="20.0" layoutY="157.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="80.0">
+               <children>
+                  <Text id="menuLB" fx:id="beverageMenuLB" fill="#b59c7a" layoutX="2.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BEVERAGE">
+                     <font>
+                        <Font name="Copperplate Gothic Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Rectangle id="menuRectangle" fx:id="beverageMenuRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ece9e3" height="65.0" layoutX="9.0" stroke="TRANSPARENT" strokeType="INSIDE" width="65.0" />
+                  <ImageView fx:id="beverageImageView" fitHeight="40.0" fitWidth="40.0" layoutX="22.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/client/mainmenu/coffee.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="mainMenuBeveragesButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="80.0" style="-fx-background-color: transparent;" />
+               </children>
+            </Pane>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="324.0" prefWidth="98.0" spacing="10.0">
+               <children>
+                  <Pane fx:id="beverageMenuPane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="80.0">
+                     <children>
+                        <Text id="logoutLB" fx:id="logoutLB" fill="#b59c7a" layoutX="11.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LOGOUT">
+                           <font>
+                              <Font name="Copperplate Gothic Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <ImageView fx:id="logoutImageView" fitHeight="40.0" fitWidth="40.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/client/mainmenu/power.png" />
+                           </image>
+                        </ImageView>
+                        <Button id="logoutBT" fx:id="logoutButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="80.0" />
+                     </children>
+                  </Pane>
                </children></VBox>
          </children>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" top="10.0" />
          </padding>
       </VBox>
    </left>
    <center>
       <ScrollPane fx:id="scrollPaneMenu" focusTraversable="false" hbarPolicy="NEVER" minWidth="-Infinity" prefHeight="665.0" prefWidth="730.0" BorderPane.alignment="CENTER">
          <content>
-            <FlowPane fx:id="flowPane" hgap="1.0" prefHeight="0.0" prefWidth="730.0" vgap="1.0" />
+            <FlowPane fx:id="flowPane" hgap="1.0" prefHeight="0.0" prefWidth="810.0" vgap="1.0" />
          </content></ScrollPane>
    </center>
 </BorderPane>
