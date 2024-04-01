@@ -22,11 +22,11 @@
       </ImageView>
       <HBox fx:id="starRating" layoutX="223.0" layoutY="72.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="141.0" spacing="5">
          <children>
-            <ToggleButton fx:id="star1" styleClass="star-button" stylesheets="@../../values/styles.css" />
-            <ToggleButton fx:id="star2" styleClass="star-button" stylesheets="@../../values/styles.css" />
-            <ToggleButton fx:id="star3" styleClass="star-button" stylesheets="@../../values/styles.css" />
-            <ToggleButton fx:id="star4" styleClass="star-button" stylesheets="@../../values/styles.css" />
-            <ToggleButton fx:id="star5" styleClass="star-button" stylesheets="@../../values/styles.css" />
+            <ToggleButton fx:id="star1" styleClass="star-button" stylesheets="@../../css/styles.css" />
+            <ToggleButton fx:id="star2" styleClass="star-button" stylesheets="@../../css/styles.css" />
+            <ToggleButton fx:id="star3" styleClass="star-button" stylesheets="@../../css/styles.css" />
+            <ToggleButton fx:id="star4" styleClass="star-button" stylesheets="@../../css/styles.css" />
+            <ToggleButton fx:id="star5" styleClass="star-button" stylesheets="@../../css/styles.css" />
          </children>
       </HBox>
       <Label fx:id="productDescriptionLabel" alignment="TOP_LEFT" layoutX="93.0" layoutY="27.0" prefHeight="47.0" prefWidth="254.0" text="Description" wrapText="true" />

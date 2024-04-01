@@ -22,7 +22,7 @@
         </Pane>
     </top>
    <center>
-          <TableView fx:id="accountsTableView" focusTraversable="false" minHeight="-Infinity" prefHeight="649.0" prefWidth="1000.0" style="-fx-font-size: 13;" stylesheets="@../../../values/table_style.css" BorderPane.alignment="CENTER">
+          <TableView fx:id="accountsTableView" focusTraversable="false" minHeight="-Infinity" prefHeight="649.0" prefWidth="1000.0" style="-fx-font-size: 13;" stylesheets="@../../../css/table_style.css" BorderPane.alignment="CENTER">
               <columns>
                   <TableColumn fx:id="usernameColumn" editable="false" prefWidth="150.0" resizable="false" text="Username" />
                   <TableColumn fx:id="nameColumn" editable="false" prefWidth="200.0" resizable="false" text="Name" />

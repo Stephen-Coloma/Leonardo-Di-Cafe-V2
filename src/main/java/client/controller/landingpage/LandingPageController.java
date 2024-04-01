@@ -29,7 +29,7 @@ public class LandingPageController {
     /**Constructor*/
     public LandingPageController(LandingPageView view){
         try {
-            registry = LocateRegistry.getRegistry(Client.PORT);
+            registry = LocateRegistry.getRegistry(Client.IP_ADDRESS, Client.PORT);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -135,7 +135,7 @@ public class MainMenuClientPageController {
     private void registerClientCallback() {
         try {
             ClientCallback clientCallback = new ClientCallback(mainMenuModel.getClientModel());
-            mainMenuModel.registerCallback(String.valueOf(mainMenuModel.getClientModel().getCustomer().getName().hashCode()), clientCallback);
+            mainMenuModel.registerCallback(String.valueOf(mainMenuModel.getClientModel().getCustomer().getUsername().hashCode()), clientCallback);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -681,8 +681,7 @@ public class MainMenuClientPageController {
                 }
             }
 
-            Object[] imageData = {product.getImageName(), ImageUtility.getImageBytes(product.getImageName())};
-            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), imageData, product.getDescription(), sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
+            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), product.getImagePackage(), product.getDescription(), sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(beverage);
 
@@ -707,8 +706,7 @@ public class MainMenuClientPageController {
             mainMenuModel.getClientModel().getFoodMenu().get(product.getName()).updateQuantity(selectFoodController.getFinalOrderedQuantity());
 
             //cast to create a new Food object to be passed on the cart
-            Object[] imageData = {product.getImageName(), ImageUtility.getImageBytes(product.getImageName())};
-            Food food = new Food(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), imageData, product.getDescription(), selectFoodController.getFinalOrderedQuantity(), selectFoodController.getFinalOrderedPrice());
+            Food food = new Food(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), product.getImagePackage(), product.getDescription(), selectFoodController.getFinalOrderedQuantity(), selectFoodController.getFinalOrderedPrice());
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(food);
 

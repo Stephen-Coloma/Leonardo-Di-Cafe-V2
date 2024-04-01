@@ -13,7 +13,9 @@ import server.view.inventory.*;
 import shared.Beverage;
 import shared.Food;
 import shared.Product;
+import util.ImageUtility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,6 +40,12 @@ public class InventoryPageController {
 
         view.getSaveChangesButton().setOnAction(actionEvent -> {
             model.updateInventory(view.getProductList());
+
+            for (String filename : model.getStagedForDeletionImages()) {
+                ImageUtility.deleteImage(filename);
+            }
+            model.getStagedForDeletionImages().clear();
+
             model.setInventoryChanges(true);
             model.notifyObservers();
             model.setInventoryChanges(false);
@@ -233,8 +241,10 @@ public class InventoryPageController {
                     view.getProductList().remove(originalIndex);
                     if (product instanceof Food) {
                         model.getFoodList().remove(((Food) product).getName());
+                        model.getStagedForDeletionImages().add(((Food) product).getImageName());
                     } else if (product instanceof Beverage) {
                         model.getBeverageList().remove(((Beverage) product).getName());
+                        model.getStagedForDeletionImages().add(((Beverage) product).getImageName());
                     }
                 }
             popupView.closePopupStage();

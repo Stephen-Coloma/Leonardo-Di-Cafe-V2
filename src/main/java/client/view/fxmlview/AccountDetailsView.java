@@ -2,16 +2,11 @@ package client.view.fxmlview;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import server.view.inventory.BeverageEditDetailsPopupView;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -39,7 +34,7 @@ public class AccountDetailsView {
         try {
             FXMLLoader loader = new FXMLLoader(AccountDetailsView.class.getResource("/fxml/client/account_details.fxml"));
             Scene scene = new Scene(loader.load());
-            scene.getStylesheets().add(Objects.requireNonNull(AccountDetailsView.class.getResource("/values/account_details.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(AccountDetailsView.class.getResource("/css/account_details.css")).toExternalForm());
 
             popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);

@@ -82,6 +82,10 @@ public abstract class Product implements Serializable{
         this.amountSold = amountSold;
     }
 
+    public Object[] getImagePackage() {
+        return image;
+    }
+
     public String getImageName() {
         return (String) image[0];
     }

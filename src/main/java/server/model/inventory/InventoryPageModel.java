@@ -15,6 +15,7 @@ public class InventoryPageModel {
     private final List<InventoryPageObserver> observers = new ArrayList<>();
     private HashMap<String, Food> foodList = new HashMap<>();
     private HashMap<String, Beverage> beverageList = new HashMap<>();
+    private List<String> stagedForDeletionImages = new ArrayList<>();
 
     public void setFoodList(HashMap<String, Food> foodList) {
         this.foodList = foodList;
@@ -44,6 +45,10 @@ public class InventoryPageModel {
 
     public HashMap<String, Beverage> getBeverageList() {
         return beverageList;
+    }
+
+    public List<String> getStagedForDeletionImages() {
+        return stagedForDeletionImages;
     }
 
     public void updateInventory(ObservableList<Object> list) {
