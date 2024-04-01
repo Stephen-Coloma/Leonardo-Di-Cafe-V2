@@ -286,11 +286,17 @@ public class MainMenuClientPageController {
             MenuCardController menuCardController = new MenuCardController(menuCardModel, menuCardView);
             menuCardController.setProductData(product);
 
+            menuCardView.getAddProductButton().setOnMouseEntered(event -> {
+                menuCardView.getAddProductButton().setStyle("-fx-background-color: #66382a; -fx-border-color: #66382a; -fx-border-radius: 50; -fx-background-radius: 50; -fx-text-fill: #ECE9E3");
+            });
+
+            menuCardView.getAddProductButton().setOnMouseExited(event -> {
+                menuCardView.getAddProductButton().setStyle("-fx-background-color: #e4d8c6; -fx-border-color: #66382a; -fx-border-radius: 50; -fx-background-radius: 50; -fx-text-fill: #634921");
+            });
+
             //this code setups up add to cart button of each card
             menuCardView.getAddProductButton().setOnAction(actionEvent -> {
-//                MenuCardModel updatedMenuCardModel = new MenuCardModel(); // remove this if finalized, this is just temporary commented out for optimizing the client program
-//                MenuCardView updatedMenuModelCardView = loader.getController(); // remove this if finalized, this is just temporary commented out for optimizing the client program
-                MenuCardController updatedMenuCardController = new MenuCardController(menuCardModel, menuCardView); // remove if something weird happens
+                MenuCardController updatedMenuCardController = new MenuCardController(menuCardModel, menuCardView);
 
                 Product product1 = menuCardModel.getProduct();
                 if (product1 instanceof Food food) {

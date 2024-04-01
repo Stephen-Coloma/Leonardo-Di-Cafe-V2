@@ -1,0 +1,16 @@
+#menuRectangle {
+    -fx-arc-height: 30;
+    -fx-arc-width: 30;
+}
+
+#logoutBT {
+    -fx-background-color: transparent;
+}
+
+#clearCartBT {
+    -fx-background-color: #b59c7a68;
+}
+
+#clearCartBT: hover {
+    -fx-background-color: #b59c7a95;
+}

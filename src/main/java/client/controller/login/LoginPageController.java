@@ -18,6 +18,7 @@ import util.exception.InvalidCredentialsException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.registry.Registry;
+import java.util.Objects;
 
 public class LoginPageController {
     private final LoginPageView loginView;
@@ -95,6 +96,7 @@ public class LoginPageController {
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/home_screen.css")).toExternalForm());
 
         //when loading the main menu, pass the clientModel received from the server
         mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel(serverResponse, loginModel.getRegistry()), loader.getController());
