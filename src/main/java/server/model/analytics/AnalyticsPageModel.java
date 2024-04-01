@@ -34,7 +34,9 @@ public class AnalyticsPageModel {
             }
         } else {
             for (Order order : orderList) {
-                LocalDate timeStamp = LocalDate.parse(order.getTimeStamp(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+                LocalDate timeStamp = LocalDate.parse(order.getTimeStamp(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//                "yyyy-MM-dd"
+//                "MM/dd/yyyy"
 
                 if (endDate == null) {
                     if (timeStamp.isEqual(startDate)) {

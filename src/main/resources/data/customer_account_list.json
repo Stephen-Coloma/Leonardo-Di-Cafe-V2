@@ -7,7 +7,7 @@
     "password": "johndoe123",
     "orderHistory": [
       {
-        "timeStamp": "12/23/2023",
+        "timeStamp": "2023-12-23",
         "status": true,
         "ID": 0,
         "totalPrice": 30.0,
@@ -61,7 +61,7 @@
         ]
       },
       {
-        "timeStamp": "12/29/2023",
+        "timeStamp": "2023-12-29",
         "status": true,
         "ID": 1,
         "totalPrice": 0.0,
@@ -81,7 +81,7 @@
         ]
       },
       {
-        "timeStamp": "01/05/2024",
+        "timeStamp": "2024-01-05",
         "status": true,
         "ID": 2,
         "totalPrice": 0.0,
@@ -129,7 +129,7 @@
     "password": "adalovelace",
     "orderHistory": [
       {
-        "timeStamp": "12/23/2023",
+        "timeStamp": "2023-12-23",
         "status": true,
         "ID": 0,
         "totalPrice": 0.0,
@@ -183,7 +183,7 @@
         ]
       },
       {
-        "timeStamp": "12/29/2023",
+        "timeStamp": "2023-12-29",
         "status": true,
         "ID": 1,
         "totalPrice": 0.0,
@@ -203,7 +203,7 @@
         ]
       },
       {
-        "timeStamp": "01/05/2024",
+        "timeStamp": "2024-01-05",
         "status": true,
         "ID": 2,
         "totalPrice": 0.0,
