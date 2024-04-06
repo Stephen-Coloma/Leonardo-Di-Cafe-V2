@@ -26,19 +26,13 @@ import java.util.List;
 public class ServerController implements MainMenuAdminObserver {
     private final ServerModel model;
     private final ServerView view;
-//    private Socket clientSocket;
-//    private ObjectInputStream streamReader;
-//    private ObjectOutputStream streamWriter;
+
     private MainMenuAdminModel mainMenuAdminModel;
 
     public ServerController(ServerModel model, ServerView view) {
         this.model = model;
         this. view = view;
     } // end of constructor
-
-//    public void setClientSocket(Socket clientSocket) {
-//        this.clientSocket = clientSocket;
-//    } // end of setClientSocket
 
     private void setComponentActions() {
         Platform.runLater(() -> {
@@ -54,21 +48,6 @@ public class ServerController implements MainMenuAdminObserver {
             mainMenuAdminController.start();
         });
     } // end of setComponentActions
-
-//    public void run() {
-//        try {
-//            streamReader = new ObjectInputStream(clientSocket.getInputStream());
-//            streamWriter = new ObjectOutputStream(clientSocket.getOutputStream());
-//
-//            model.registerServerController(this);
-//
-//            listenToClient();
-//        } catch (IOException ioException) {
-//            ioException.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//    } // end of run
 
     public void initializeAdminInterface() {
         System.out.println("Obtained Main Menu Controller");
@@ -95,27 +74,4 @@ public class ServerController implements MainMenuAdminObserver {
             model.notifyClients();
         }
     } // end of notifyMenuChanges
-
-//    public synchronized void sendData(String clientID, String code, Object data) {
-//        Object[] response = {clientID, code, data};
-//        try {
-//            if (!clientSocket.isClosed()) {
-//                streamWriter.writeObject(response);
-//                streamWriter.flush();
-//                streamWriter.reset();
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    } // end of sendData
-
-//    private void closeConnection() {
-//        try {
-//            streamReader.close();
-//            streamWriter.close();
-//            clientSocket.close();
-//        } catch (IOException ioException) {
-//            ioException.printStackTrace();
-//        }
-//    }
 } // end of ServerController

@@ -22,7 +22,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Objects;
 
-
 public class Server extends Application {
     private static final int PORT = 2000;
     private ServerModel model;
@@ -81,7 +80,6 @@ public class Server extends Application {
             } catch (RemoteException | AlreadyBoundException e) {
                 throw new RuntimeException(e);
             }
-
         }).start();
     } // end of bindServices
 } // end of Server class
